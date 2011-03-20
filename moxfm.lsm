@@ -1,0 +1,23 @@
+Begin3
+Title: Moxfm file and application manager
+Version: 1.0
+Entered-date: 
+Description: A free Motif file and application manager.
+ Moxfm is quite similar to xfm, whose source code
+ it is based upon, but has a Motif interface and some
+ new features. It has good support for drag'n'drop.
+Keywords: file manager, desktop
+Author: Simon Marlow, Albert Graef, Oliver Mai (mai@sugra.desy.de)
+Maintained-by: mai@sugra.desy.de (Oliver Mai)
+Primary-site: ftp.uni-stuttgart.de/pub/systems/linux/local/X11/
+ 244 KB moxfm-src.tgz
+ 516 KB moxfm-linuxaout.tgz
+ 516 KB moxfm-linuxelf.tgz
+Alternate-site: ftp.x.org/contrib/applications/
+ 244 KB moxfm-src.tgz
+Original-site: http://sugra.desy.de/~mai/moxfm
+Platform: To compile the sources yourself, you need OSF/Motif
+ and the XPM library. For the binary version, you need X11
+ shared libs.
+Copying-policy: GPL
+End

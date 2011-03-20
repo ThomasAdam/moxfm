@@ -1,0 +1,44 @@
+XCOMM  -----------------------------------------------------
+XCOMM  Imakefile for moxfm v 1.0
+XCOMM
+XCOMM  (c) Simon Marlow 1990-1993  (for xfm)
+XCOMM  (c) Albert Graef 1994 
+XCOMM  (c) Oliver Mai 1995  (adapted to moxfm)
+XCOMM  -----------------------------------------------------
+
+#include "../Imake.options"
+
+#ifdef MAGIC_HEADERS
+MAGIC_INC = -I../regexp
+MAGIC_LIB = -L../regexp -lregexp
+MAGIC_DEF = -DMAGIC_HEADERS
+MAGIC_OBJ = magic.o
+MAGIC_SRC = magic.c
+DEPLIBS1	= ../regexp/libregexp.a
+#endif
+
+#ifdef OSF1
+OSF1_DEF = -DOSF1
+MOUNT_DEF = -DNO_GETMNTENT
+#endif
+
+EXTRA_INCLUDES = $(MAGIC_INC) $(XMINCDIR) $(XPMINCDIR) $(SVR4_INC)
+
+DEFINES = $(MAGIC_DEF) $(DEBUG_DEFINES) $(IRIX_DEF) $(OSF1_DEF) $(MOUNT_DEF) $(STATFSTYPE) $(REALPATH) $(MEMMOVE) -DXFMLIBDIR=\"$(XFMLIBDIR)/dot.moxfm\" -DMTAB=\"$(MTABPATH)\" -DMAILDIR=\"$(MAILDIR)\"
+
+SYS_LIBRARIES	= $(XMLIBDIR) $(XPMLIBDIR) $(SVR4_LIBDIR) $(MAGIC_LIB) $(XMLIB) $(XPMLIB) $(XTOOLLIB) $(XMULIB) $(XLIB) 
+
+SRCS	= FmMain.c FmAw.c FmFw.c FmDirs.c FmBitmaps.c FmMenus.c \
+ FmOps.c FmUtils.c FmExec.c FmAwActions.c FmDialogs.c \
+ FmAwCb.c FmDragDrop.c FmFwActions.c FmFwCb.c FmDelete.c \
+  FmChmod.c FmMount.c FmAwObjects.c FmIcons.c FmMonitor.c \
+  $(MAGIC_SRC)
+
+OBJS	= FmMain.o FmAw.o FmFw.o FmDirs.o FmBitmaps.o FmMenus.o \
+ FmOps.o FmUtils.o FmExec.o FmAwActions.o FmDialogs.o \
+ FmAwCb.o FmDragDrop.o FmFwActions.o FmFwCb.o FmDelete.o \
+  FmChmod.o FmMount.o FmAwObjects.o FmIcons.o FmMonitor.o \
+  $(MAGIC_OBJ)
+
+
+ComplexProgramTarget(moxfm)

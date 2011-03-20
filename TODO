@@ -1,0 +1,10 @@
+*  Add support for copying files over the net to/from remote machines
+*  Implement a real trash can
+*  Add Support for copying file contents to clipboard
+*  Add Chmod on multiple files
+*  Add an application bar as an alternative way to start configured applications
+*  Increase moxfm's performance by using multiple threads or processes (esp. for file window
+   updates and copy operations)
+*  Add a hypertext help feature (or HTML docs)
+*  Add a shell for interactively defining file types
+*  Implement a new tree file view

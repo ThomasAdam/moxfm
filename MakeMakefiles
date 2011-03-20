@@ -1,0 +1,8 @@
+#!/bin/sh -
+xmkmf
+cd regexp
+xmkmf
+make depend
+cd ../src
+xmkmf
+make depend

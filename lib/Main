@@ -1,0 +1,15 @@
+#XFM
+# xfm applications file
+# written by moxfm  Mon Sep  3 10:14:53 2001
+#
+##########################################
+
+Floppy:/:floppy:floppy.xpm:OPEN:COPY
+CD-ROM:/:cdrom:cdrom.xpm:OPEN:
+Trash:/root/.trash::trash_empty.xpm:OPEN:mv -f --backup=numbered $* ~/.trash
+Printer:::printer.xpm:exec /usr/bin/lpq | /usr/bin/X11/xless:exec lpr -#%Number of copies\:--1% $*
+Xterm:::xterm.xpm:exec xterm -sb -sl 500 -j:exec xterm -sb -j -e $1 %Arguments\:%
+Emacs:::emacs.xpm:exec emacs:exec emacs $*
+Netscape:::netscape.xpm:exec netscape:exec netscape $*
+Gimp:::paint.xpm:exec gimp:exec gimp $*
+XV:/usr/X11/bin::xv.xpm:exec xv:exec xv $*

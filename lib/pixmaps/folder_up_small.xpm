@@ -1,0 +1,27 @@
+/* XPM */
+static char * folder_up_small_xpm[] = {
+/* width height ncolors chars_per_pixel */
+"16 16 5 1",
+/* colors */
+" 	s background	c None",
+".	c black",
+"X	c #CECEFF",
+"o	c white",
+"O	c #9C9CFF",
+/* pixels */
+"                ",
+"                ",
+"                ",
+"   ...          ",
+"  .XXX.         ",
+" .XXXXX........ ",
+".oooooooooooooo.",
+".oXoXoXoXoXoXoO.",
+".XoXoXo.oXoXoXO.",
+".oXoXo.o.oXoXoO.",
+".XoXo.o.o.oXoXO.",
+".oXoXo.o.oXoXoO.",
+".XoXo.oXo.oXoXO.",
+".oXoXoXoXoXoXoO.",
+".XoXoXoXoXoXoXO.",
+"................"};

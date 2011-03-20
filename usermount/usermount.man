@@ -1,0 +1,83 @@
+.TH usermount 1 "February 1996"
+.SH NAME
+usermount, userumount \- Filesystem mounting and unmounting utilities
+
+.SH SYNOPSIS
+.B usermount
+\fIdevice\fP
+.br
+.B usermount
+\fIdirectory\fP
+.br
+.B usermount -version
+.PP
+.B userumount
+\fIdevice\fP
+.br
+.B userumount
+\fIdirectory\fP
+.br
+.B userumount -version
+.sp
+.SH DESCRIPTION
+Usermount and userumount enable ordinary users to mount and unmount certain
+filesystems. Either the special \fIdevice\fP to be (un)mounted or the corresponding
+mount point \fIdirectory\fP have to be given as arguments to usermount and
+userumount.
+The file \fI/usr/local/lib/userfstab\fP determines, which devices users
+may mount on which mountpoints. The format of the \fIuserfstab\fP file is the same
+as that of \fI/etc/fstab\fP (see the manpage \fIfstab\fP(4)). A typical \fIuserfstab\fP
+file might look as follows:
+.sp
+.nf
+	/dev/fd0		/floppy	msdos	noexec	0	0
+	/dev/cdrom	/cdrom	iso9660	ro	0	0
+.fi
+.sp
+In this example users are allowed to mount the floppy drive \fI/dev/fd0\fP (with DOS
+formatted floppies) on the directory \fI/floppy\fP, and to mount the CD-ROM read-only
+on \fI/cdrom\fP. The floppy is mounted with the command \fIusermount /floppy\fP or
+\fIusermount /dev/fd0\fP.
+.PP
+When usermount and userumount have been successfull (un)mounting a device, the
+\fI/etc/mtab\fP file is updated accordingly. When a device cannot be mounted
+\fIread-write\fP, usermount will try to mount it \fIread-only\fP.
+.PP
+If usermount and userumount have been compiled with the \fI-DLOGFILE=\\"<log-file>\\"\fP
+option, all (un)mounting actions are logged in <log-file>. To find out if this is the
+case, run \fIusermount -version\fP.
+.PP
+In principle, users may only unmount those devices with userumount which they
+themselves mounted in the first place. This does not apply when userumount cannot
+determine who mounted the device by looking at the ownership of the mount point,
+e.g. for non-\fImsdos\fP and non-\fIhpfs\fP filesystems mounted read-only.
+.PP
+.B Caution:
+If usermount has been compiled with the \fI-DSET_OWNER\fP option, the user is made
+the owner of filesystems he is mounting read-write, in order to make sure that he has
+write permissions. To find out if this is the case, run \fIusermount -version\fP.
+.PP
+.B
+Caution:
+Usermount and userumount have to be \fIsetuid root\fP in order to work. It is important
+that the \fIuserfstab\fP file is owned by root and not writable for any other user. You
+can restrict the usage of user(u)mount to a certain group of users by making user(u)mount
+non-executable for others than members of this group. 
+.SH "FILES"
+.TP 4
+.B /usr/local/lib/userfstab
+Contains table of devices mountable with usermount.
+.TP 4
+.B /etc/mtab
+Contains table of devices currently mounted with \fImount\fP or usermount.
+.SH "SEE ALSO"
+\fImount\fP(8), \fIfstab\fP(4), \fImoxfm(1)\fP
+.SH "CAVEATS AND BUGS"
+Usermount does not support auto filesystem detection. Userumount does not
+work properly for \fImsdos\fP and \fIhpfs\fP filesystems mounted with the
+\fIuid=\fP option. If you find more bugs, email mai@sugra.desy.de.
+.SH "COPYRIGHT"
+Copyright (c) 1995, 1996 by Oliver Mai
+.SH "AUTHOR"
+Usermount and userumount were written by Oliver Mai (mai@sugra.desy.de) and are
+designed be used with the \fImoxfm\fP filemanager.

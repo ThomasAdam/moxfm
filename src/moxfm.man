@@ -1,0 +1,1271 @@
+.TH MOXFM 1 "January 1996" "X Version 11"
+.SH NAME
+moxfm \- Motif file and application manager
+
+.SH SYNOPSIS
+.B moxfm
+[\fIoptions\fP ...]
+.sp
+.SH DESCRIPTION
+\fIMoxfm\fP is an OSF/Motif based file and application manager for Unix
+workstations running the X window system. Moxfm is quite similar to the
+Athena widgets based \fIxfm\fP filemanager, and it was developed using
+the source code of xfm. Moxfm uses configuration files with the same
+format as xfm (except the device configuration file, see CONFIGURATION).
+
+Moxfm \- as xfm \- allows you to browse your directory tree and to copy, move,
+link and delete files in an intuitive way by simple drag-and-drop actions. It
+provides context-sensitive popup menus. Directory displays are updated
+automatically in regular intervals when the contents of the directory
+changes. The integrated application manager provides a kind of ``shelf'' on
+which you can place your favorite applications, as well as the files and
+directories you are currently working with. It also allows you to access
+different groups of applications and files. User-definable file types let you
+specify a command to be executed when double-clicking on a file or dropping
+other files onto it. You can place files and applications as icons on the root
+window and use them both for starting applications, opening directory windows,
+and as drop sites. Application windows as well as the desktop icons can also
+be updated automatically whenever the corresponding application files
+change. Furthermore, moxfm provides a monitoring facility which allows to
+``have an eye'' on important files and directories and respond with
+user-defined actions to certain types of events when the status of one of
+these files changes. Last not least, \fImoxfm\fP can automatically mount and
+unmount special devices like floppies as you open and close the corresponding
+directories (mount points) or copy files to them.
+
+.SH "OPTIONS"
+Moxfm accepts all the usual toolkit options. Furthermore, the following
+options let you print moxfm's version number and control which windows
+are displayed at startup.
+.TP 4
+.B \-version
+Print the version number and exit.
+.TP 4
+.B \-appmgr
+Only display the application manager window and the desktop icons initially.
+.TP 4
+.B \-filemgr
+Only display the file manager window initially. 
+.TP 4
+.B \-dir \fIpath\fP
+Only display a file manager window of \fIpath\fP.
+.TP 4
+.B \-ignorestartup
+Ignore the (optional) startup file, which specifies which windows are opened
+at which locations at startup.
+.PP
+When both \fI-appmgr\fP and \fI-filemgr\fP are specified, the main application
+window and a file manager window of the home directory will be displayed,
+which is also the default when there is no startup file, or when the
+\fI-ignorestartup\fP option is given.
+.SH "RUNNING MOXFM FOR THE FIRST TIME"
+The first time a user is running moxfm, the program will copy a number of
+configuration files into a directory, which is defined by the
+\fIapplicationCfgPath\fP resource (usually \fI~/.moxfm\fP), unless this
+directory already exists.  These personal configuration files may be edited to
+customise moxfm and xfm to the user's taste. In addition, the user might want
+to copy the application defaults file \fIMoxfm\fP into his home directory and
+customize it.
+.SH "USAGE"
+Most of it should be fairly obvious. There is an arbitrary number of
+application and file windows. Each
+.B file window
+shows the contents of one directory. In order to perform an action on a
+\fIsingle\fP file or directory, you can press the right mouse button over it
+to obtain a popup menu, or you press the middle mouse button on it and drag it
+to a second file window, a directory icon (e.g.) in the same file window, a
+button in an application window, or the background of an application
+window. If you want to copy the contents of an ASCII file into e.g. a Motif
+editor (such as \fInedit\fP), you can drop the file over the editor window as
+well. You can also double-click on an item to start a corresponding action
+(like launching an application, editing a file, or changing directories). If
+you want to perform an action on \fImultiple\fP files/directories
+simultaneously, you can \fIselect\fP multiple files with the left mouse key in
+combination with the \fICtrl\fP key. Then you can select an action from the
+pulldown file menu, or you can drag the files by pressing the middle mouse
+button in one of the selected items and moving the mouse. If you want to
+select a number of files in consecutive order, you can select the first file
+of the block with the left mouse key and then select the last file with the
+left mouse key in connection with the \fIShift\fP key.
+.PP
+If you drop files and/or directories onto the background of a file window or
+onto a directory icon within a file or application window, the
+files/directories are \fImoved\fP to the corresponding directory. If you want
+to \fIcopy\fP the items instead of moving them, you have to hold the
+\fICtrl\fP key pressed when releasing the middle mouse button. You can make
+\fIlinks\fP to the files/directories in a different directory by pressing the
+\fICtrl Shift\fP keys when releasing the middle mouse key over the
+corresponding directory.
+.PP
+The action taken when double-clicking on a file depends on the type of the
+file. If it is a directory, it is displayed in the file window. If it is an
+executable, the program is started. Other files are opened in the default
+editor (specified by the \fIdefaultEditor\fP resource), unless another action
+is given for the type of the file in the \fIxfmrc\fP file (see CONFIGURATION
+below).  Moxfm can determine the type of the file by reading the first 1 KB of
+its contents and comparing it with the "\fImagic headers\fP" of known file
+types (unless moxfm has been compiled without the -DMAGIC_HEADERS option),
+and/or by matching the file name with predefined patterns in the \fIxfmrc\fP
+file. On slow devices, such as floppies or CD-ROMs, reading the headers of all
+files in a directory can take unacceptably long time. Therefore moxfm can be
+told to use an alternative \fIxfmrc-nomagic\fP file without magic headers for
+those devices (see the description of the \fInoMagicConfigFile\fP resource
+below).
+.PP
+In the \fIxfmrc\fP file you can also specify drop actions for different file
+types, so when you drop files onto a file of one of these types the
+appropriate action is performed. Applications can be launched by dropping
+files on them.  When you drop files onto a file for which there is no drop
+action defined, the files are copied, moved or linked to the directory of the
+file window. In file windows, valid drop sites are always highlighted when you
+drag files over them.
+.PP
+Directories can be displayed in two different forms: \fIicon view\fP (display
+directories and files as icons) and \fItext view\fP (similar to \fIls -l\fP).
+These view types are selected from the \fIOptions\fP menu, the default view
+type is given by the \fIinitialDisplayType\fP resource.
+.PP
+There are several ways to change the directory displayed in a file window. You
+can directly edit the text field which displays the name of the shown
+directory and press the \fIEnter\fP key, or you can double-click on a
+directory icon.  To go to your home directory you can also select the \fIGo
+home\fP item from the \fIDirectory\fP menu or simply press the button with the
+symbol of a (typical swedish) house; to go to the parent directory you can
+select the \fIGo up\fP item from the \fIDirectory\fP menu or press the button
+with the parent directory symbol. You can change into one of the current
+directory's ancestor directories by pressing the right mouse button over the
+directory text field and choosing a directory from the posted popup menu.
+.PP
+The other buttons in the file windows have the following meanings. When you
+press the button with the glasses symbol, the directory contents will be
+reread and redisplayed. Clicking on the button with two directory symbols on
+it opens a second window of the same directory. Pressing the button which
+shows the symbol of a window with colored icons will cause a new instance of
+the main application window to come up. When you click on the button with the
+green leftarrow, all your changes to the text field containing the directory
+name are discarded (unless you have already pressed the \fIEnter\fP key).
+.PP
+The
+.B application windows
+contain arbitrary numbers of buttons, for which a push and/or a drop action
+can be defined. You can change the actions and the icon of a button by
+pressing the right mouse button over it and selecting \fIEdit\fP from the
+popup menu. For the syntax of the push action and drop action fields, see FILE
+TYPE CONFIGURATION below. To create a new button, press the right mouse button
+over the background of the application window and select the \fIInstall
+application...\fP item, or drag a file or directory from a file window to the
+background of the application window. In this case a new button is created,
+taking the push and drop actions for the type of the file as the push and drop
+actions for the button. Clicking on a directory button in an application
+window will start a file window showing the contents of the directory. You can
+also copy and move buttons between different application windows or within an
+application window by drag'n'drop with the middle mouse button. If the
+\fICtrl\fP key is pressed when releasing the middle mouse button, the button
+is copied, otherwise it is moved.
+.PP
+You can also drop other types of objects, such as text strings, on the
+application window. Users may define the object types which can be dropped on
+application windows in the \fItargets\fP configuration file (see below). For
+each object dropped onto an application window a button is created, which can
+be used as a drag source.  The push action of the button is specified in the
+\fItargets\fP file.
+.PP
+There is one \fImain application group\fP, which is specified by the
+\fImainApplicationFile\fP resource. An application window with this main menu
+is opened e.g. when you start moxfm using the \fI-appmgr\fP option. Each
+application window may contain buttons for further application groups. When
+you press such a button, the application window will show the buttons of that
+group instead.  When you select the \fIOpen\fP item from the popup menu of
+such a button, a new application window showing the selected application group
+is opened.
+.PP
+You can place files and applications as icons on the root window
+by choosing the \fIPut on desktop\fP item from their popup menus. For these
+\fIdesktop icons\fP a push action and a drop action can be defined, as for
+application buttons. To invoke the push action of a desktop icon you have to
+double-click on it. To change the actions you can select \fIEdit\fP from the
+icon's popup menu.
+
+.SH "MENU COMMANDS"
+.sp
+FILE MENU
+.PP
+File manipulation operations.
+.TP 4
+.I New...
+.br
+Create a new (and empty) file.
+.TP 4
+.I Copy...
+.br
+Create a copy of a single item with a new name or copy selected items to
+another directory.
+.TP 4
+.I Move...
+.br
+Rename a single item (directory or file) or move selected items to another
+directory.
+.TP 4
+.I Link...
+.br
+Like \fICopy\fP, but creates symbolic links rather than copying the selected
+items.
+.TP 4
+.I Perform action...
+.br
+You are prompted for an action to be performed on the selected items.
+.TP 4
+.I Delete
+.br
+Delete the selected items.
+.TP 4
+.I Select...
+.br
+Select items by pattern. The usual metacharacters are recognized (\fI*\fP,
+\fI?\fP, \fI[ ]\fP). (Currently there is no provision for escaping these.)
+.TP 4
+.I Select all
+.br
+Select all items in the current directory (except the parent directory).
+.TP 4
+.I Deselect all
+.br
+Deselect all items.
+.TP 4
+.I Edit config file
+.br
+The \fIxfmrc\fP configuration file is loaded into the default editor.
+.TP 4
+.I Edit monitor file
+.br
+The \fIxfmmon\fP file (see CONFIGURATION) is loaded into the default editor.
+.TP 4
+.I Reload configuration
+.br
+The \fIxfmrc\fP, xfmmon and \fImagic\fP configuration files are reread and
+all file and application windows are updated.
+.TP 4
+.I About moxfm...
+.br
+A message box with some information about moxfm (copying etc.)
+is popped up.
+.TP 4
+.I Close window
+.br
+Close the current file window
+.TP 4
+.I Exit.
+.br
+Terminate moxfm.
+.PP
+DIRECTORY MENU
+.PP
+Operations dealing with directories and the file window.
+.TP 4
+.I Make directory...
+.br
+Create a new directory.
+.TP 4
+.I Filesystem info...
+.br
+Show information on free space and filesystem parameters.
+.TP 4
+.I Reread files.
+.br
+Reread and redisplay directory contents.
+.TP 4
+.I Filter files...
+.br
+Only show files whose names match the given pattern. The usual metacharacters
+are recognized (\fI*\fP, \fI?\fP, \fI[ ]\fP). (Currently there is no provision
+for escaping these.) This only affects normal files, i.e. directory items will
+not be filtered. The \fIClear\fP button in the Filter dialog form reverts to
+the full display.
+.TP 4
+.I Go home
+.br
+Change to your home directory.
+.TP 4
+.I Go up
+.br
+Go to the parent directory.
+.TP 4
+.I Enter command...
+.br
+You are prompted for a command, which will be interpreted by your default
+shell in the directory of the file window.
+.PP
+WINDOWS MENU
+.PP
+Operations concerning windows.
+.TP 4
+.I New file window
+.br
+Open another window on the current directory.
+.TP 4
+.I New application window
+.br
+Open a window with the main application menu.
+.TP 4
+.I Mount table window
+.br
+Open a window which displays the configured mountable devices (if not yet
+present).
+.TP 4
+.I Raise desktop icons
+.br
+Raise the desktop icons to the top.
+.TP 4
+.I Start xterm
+.br
+Start an xterm from the current directory.
+.TP 4
+.I Save windows
+.br
+Save positions and states of all moxfm's windows to the startup file. The
+desktop icons are saved, too.
+.TP 4
+.I Save desktop icons
+.br
+The desktop icons and their positions are saved.
+.PP
+OPTIONS MENU
+.PP
+Options for the directory display.
+.TP 4
+.I Icon view
+.br
+Select the icons form display.
+.TP 4
+.I Text view
+.br
+Select the text form display.
+.TP 4
+.I Sort by name
+.br
+Sort directory by name.
+.TP 4
+.I Sort by size
+.br
+Sort directory by size.
+.TP 4
+.I Sort by date.
+.br
+Sort directory by date.
+.TP 4
+.I Show hidden files.
+.br
+Show hidden files (files starting with a dot).
+.TP 4
+.I Show directories
+.br
+Show directory items.
+.TP 4
+.I Directories first
+.br
+Show directories first in the window.
+.TP 4
+.I Use magic headers
+Determine the file types by reading the first 1 KB of each file and comparing
+them with the \fImagic headers\fP of known file types. Switch this off, if
+file type recognition is too slow. This requires that you have specified an
+alternative \fIxfmrc-nomagic\fP file (see \fInoMagicCfgFile\fP resource).
+.PP
+FILE POPUP MENU
+.PP
+Operations on a single file. This menu pops up when pressing the right mouse
+button on a directory or file icon. Not all of these operations are available
+for all filetypes.
+.TP 4
+.I Open
+.br
+Open a file window on the selected item. This option is only available if the
+selected item is a directory.
+.TP 4
+.I Execute
+.br
+Launch the selected application. You are prompted for command line
+parameters. This option is only available for executables.
+.TP 4
+.I Edit
+.br
+Edit the selected item using the program specified in the \fIdefaultEditor\fP
+resource (only available if the selected item is not a directory).
+.TP 4
+.I View
+.br
+Same as Edit, but invokes a program for viewing the file (\fIdefaultViewer\fP
+resource).
+.TP 4
+.I Perform action...
+.br
+You are prompted for an action to perform on the selected item.
+.TP 4
+.I Rename...
+.br
+Rename the selected item.
+.TP 4
+.I Copy...
+.br
+Copy the selected item.
+.TP 4
+.I Move...
+.br
+Same as rename, but the old name is not displayed in the dialog.
+.TP 4
+.I Link...
+.br
+Create a symbolic link to the selected item.
+.TP 4
+.I Delete
+.br
+Delete the selected item.
+.TP 4
+.I Properties...
+.br
+Display information about the selected item (file size, permissions and
+such). You can change permissions and ownership.
+.TP 4
+.I Put on desktop
+.br
+Place the selected item as an icon on the root window.
+.PP
+APPLICATION GROUP MENU
+.PP
+Operations for managing the application window. This menu pops up when
+pressing the right mouse button on the background of an application window.
+.TP 4
+.I Install application...
+.br
+Install a new application in the application window. Pops up a dialog form
+into which you can enter the necessary information (see APPLICATION FILES for
+a discussion of the fields in this form).
+.TP 4
+.I New application group...
+.br
+Simplified install dialog form for creating a new application box and making it
+accessible from the current application menu (see APPLICATION FILES).
+.TP 4
+.I Save setup
+.br
+Save the configuration of the current application window.
+.TP 4
+.I Reload setup
+.br
+Reload the configuration of the current application window from the
+configuration file and discard all recent changes.
+.TP 4
+.I Edit setup file
+.br
+Open the configuration file of the current application window with the default
+editor.
+.TP 4
+.I Windows
+.br
+A cascade menu with items listed below is posted.
+.TP 4
+.I Close window
+.br
+Close the current application window.
+.TP 4
+.I Exit
+.br
+Terminate moxfm.
+.PP
+Windows Cascade Menu
+.TP 4
+.I Main appl window
+.br
+Open a new application window with the main apllication menu.
+.TP 4
+.I Open file window
+.br
+Open a file window displaying your home directory.
+.TP 4
+.I Mount table window
+.br
+Open a window which displays the configured mountable devices (if not yet
+present).
+.TP 4
+.I Raise desktop icons
+.br
+Raise the desktop icons to the top.
+.TP 4
+.I Save windows
+.br
+Save positions and states of all moxfm's windows to the startup file. The
+desktop icons are saved, too.
+.TP 4
+.I Save desktop icons
+.br
+The desktop icons and their positions are saved.
+.PP
+APPLICATION POPUP MENU
+.PP
+Operations on a single application item (button). This menu pops up when
+pressing the right mouse button on a button in the application window.
+.TP 4
+.I Open
+If the selected item represents an application menu, a new application window
+displaying this menu is opened. Otherwise, the default push action of the
+selected button is invoked.
+.TP 4
+.I Edit...
+.br
+Edit an application item. Pops up a dialog form which allows you to change
+the configuration information associated with the selected item (see
+CONFIGURATION for a discussion of the fields in this form).
+.TP 4
+.I Delete
+.br
+Remove the selected button from the application window.
+.TP 4
+.I Put on desktop
+.br
+Place the selected item as an icon on the root window.
+.PP
+DESKTOP ICON POPUP MENU
+.PP
+Operations on a single desktop icon. This menu pops up when pressing the right
+mouse button on a desktop icon.
+.TP 4
+.I Open
+If the selected icon represents an application menu, a new application window
+displaying this menu is opened. Otherwise, the default push action of the
+selected icon is invoked.
+.TP 4
+.I Edit...
+.br
+Edit a desktop icon. Pops up a dialog form which allows you to change
+the configuration information associated with the selected icon (see
+CONFIGURATION for a discussion of the fields in this form).
+.TP 4
+.I Save icon
+.br
+Save the position and state of the selected icon (only available if the
+autoSave resource is false, see RESOURCES).
+.TP 4
+.I Remove from desktop
+.br
+Remove the selected icon from the root window.
+.PP
+.SH "RESOURCES"
+Various aspects of moxfm can be configured by changing corresponding
+resource settings in the application defaults file. Some important resources
+are listed below:
+.TP 4
+.B bitmapPath
+.TP 4
+.B pixmapPath
+.br
+The path on which to search for bitmap and pixmap icons, respectively.
+Different directories are separated by a colon.
+.TP 4
+.B mainApplicationFile
+.TP 4
+.B configFile
+.TP 4
+.B noMagicConfigFile
+.TP 4
+.B startupFile
+.TP 4
+.B DTIconFile
+.TP 4
+.B devFile
+.TP 4
+.B userObjectFile
+.TP 4
+.B magicFile
+.br
+The names of the application and configuration files used by \fImoxfm\fP (see
+CONFIGURATION). Normally, these files will be located in \fI~/.moxfm\fP.  You
+may wish to change this, e.g., if you want to provide a system-wide
+\fIxfmrc\fP file. (The application files should always be kept in the user's
+home directory, such that each user can save his/her private application
+settings.) You may specify these pathnames as \fI~/path\fP, but not as
+\fI~user/path\fP.
+.TP 4
+.B applicationCfgPath
+.br
+The directory in which the application files for new application groups are
+located (see the \fIInstall group\fP option of the application menu), usually
+\fI~/.moxfm\fP.
+.TP 4
+.B tmpObjectDir
+.br
+This resource points to the directory where temporary object files are created.
+These files contain the data of user defined objects dropped on application
+windows and are deleted when the corresponding buttons are removed.
+.TP 4
+.B updateInterval
+.br
+Set the time interval in milliseconds in which to perform automatic folder
+(and application window) updates. Default: 10000.
+.TP 4
+.B doubleClickTime
+.br
+Set the time interval in milliseconds for which a sequence of two mouse clicks
+should be interpreted as a double click. Default: 300.
+.TP 4
+.B firstIconPos
+.br
+Specifies the position of the first desktop icon. Notation:
+[+-]\fIx\fP[+-]\fIy\fP.  The default is \fI+0+0\fP (upper left corner of
+screen).
+.TP 4
+.B iconAlignment
+.br
+This resource determines the direction of the desktop icons' alignment
+relative to the first desktop icon. Allowed values are \fIUp\fP, \fIDown\fP,
+\fILeft\fP and \fIRight\fP. \fIDown\fP (which is the default) e.g. means that
+the second desktop icon is placed \fIunder\fP the first, the third under the
+second, etc.
+.TP 4
+.B iconsOverrideRedirect
+.br
+Some mwm-incompatible window managers such as ol[v]wm and twm
+won't display desktop icons correctly (e.g., the window borders may
+not be completely removed). In this case you might want to set this
+resource to true, which makes the window manager ignore desktop
+icons. This might cause strange side effects, esp. when you are moving
+icons.
+.TP 4
+.B checkFiles
+.br
+Set this to true (default) if you want the time stamps of all files (except
+subdirectories) shown by the file windows to be checked on automatic folder
+updates. If set to false, only the timestamp of the directory itself is
+checked.
+.TP 4
+.B checkApplicationFiles
+.br
+Set this to true (default) if you want application windows to be updated
+automatically whenever the time stamp on the application file changes. (This
+option is ignored when the autoSave resource is set to false, see below.)
+.TP 4
+.B autoSave
+.br
+When you change the contents of an application group, or create, remove or
+change a desktop icon, moxfm will automatically save the changes to the
+configuration file, if this resource is set to true. Otherwise, you are asked
+if you want to save your changes when you close the application window or
+change the application group. Set this resource to true if you want to enable
+automatic updates of application files (see above).
+.TP 4
+.B saveOnExit
+.br
+If you want moxfm to change all window positions and contents automatically on
+exit (i.e., when you explicitly quit the program or it receives a TERM
+signal), set this resource to true.
+.TP 4
+.B confirmXXX
+.br
+Resources to request confirmation for various operations. \fIXXX\fP can be
+any one of \fIDeletes\fP, \fIDeleteFolder\fP, \fICopies\fP, \fIMoves\fP,
+\fILinks\fP, \fIOverwrite\fP and \fIQuit\fP. By default these are all enabled.
+.TP 4
+.B newWinOnDirPopup
+.br
+You can select a new directory to be viewed from the popup menu of the
+directory text field. This resource determines, if you want the directory to
+be displayed in the current window (if false; default), or if you want to open
+a new file window showing the selected directory.
+.TP 4
+.B defaultEditor
+.br
+The command with which \fImoxfm\fP invokes your favorite editor.
+.TP 4
+.B defaultViewer
+.br
+The command with which \fImoxfm\fP invokes your favorite viewer.
+.TP 4
+.B xterm
+.br
+The command with wich \fImoxfm\fP starts an xterm.
+.TP 4
+.B BourneShells
+.br
+Moxfm calls other programs by executing your shell (as taken from the
+environment variable \fISHELL\fP). Since Bourne compatible shells need one
+extra parameter, moxfm needs to know about the type of the shell. If this
+resource is not set (default), or is equal to the special string \fIAUTO\fP, a
+quick-and-dirty test is done at startup. This test will fail if the shell's
+initialisation files cause some output. If this happens, change these files,
+or set the \fIBourneShells\fP resource to a comma separated list of full path
+names of Bourne compatible shells. If your shell matches an entry in this
+list, moxfm will assume it is a Bourne shell.
+.TP 4
+.B suppressWarnings
+.br
+If this is set to true, both X Toolkit warnings (type: 'Action not found') and
+warnings about pixmaps which could not be found are suppressed. (Default:
+false)
+.TP 4
+.B showCopyInfo
+Normally there is a window informing you when moxfm is copying files. If you
+set this resource to false, this window is suppressed.
+.TP 4
+.B showOwner
+.TP 4
+.B showDate
+.TP 4 
+.B showPermissions
+.TP 4
+.B showLength
+.br
+These resources determine which file information is displayed in text view
+mode.
+.TP 4
+.B startFromXterm
+.br
+If you set this to true, all applications are launched from xterms. (Default:
+false)
+.TP 4
+.B keepXterm
+This resource applies only if \fIstartFromXterm\fP is set to true. If you set
+both resources to true, the xterms from wich the applications are launched are
+not closed, when the applications terminate. (Default: false)
+.PP
+There are way too many available resources to list them all in this manual
+page, so please take a look at the application defaults file for more
+information.
+.SH "CONFIGURATION"
+Besides the application resources, \fImoxfm\fP can be configured by means of
+seven different files, which are usually named \fIxfmrc\fP,
+\fIxfmrc-nomagic\fP, \fIDesktop\fP, \fIxfmmon\fP, \fImoxfmdev\fP,
+\fItargets\fP and \fImagic\fP, and are located in the \fI~/.moxfm\fP
+directory. Moreover, there is a number of so-called application files, from
+which \fImoxfm\fP determines the contents of the application windows, like the
+\fIMain\fP file which usually describes the contents of the main
+application group. All these files are plain ASCII files which can be edited
+using any text editor. (Note that application files also can be written by
+\fImoxfm\fP itself when you change the contents of an application group
+interactively; see the \fIautoSave\fP resource.)  Any line in these files
+which starts with a hash sign (\fI#\fP) is interpreted as a comment; empty
+lines are ignored.
+
+.SH "FILE TYPE CONFIGURATION"
+The \fIxfmrc\fP file (specified by the \fIconfigFile\fP resource)
+determines the types of ordinary (non-executable,
+non-directory) files which \fImoxfm\fP should recognize. Each file type
+associates a pattern with an icon and two different kinds of actions (commands
+to be executed on the file). If \fImoxfm\fP has been compiled with the
+\fIMAGIC_HEADERS\fP option it is possible to specify icons (but not
+actions) for directories and executables as well. Each line has the following
+format:
+.sp
+.nf
+pattern:icon:push-action:drop-action
+.fi
+.sp
+As indicated, the different fields are separated by a colon (use \fI\\:\fP
+to escape the \fI:\fP character, and \fI\\\\\fP to escape the backslash
+character itself). The meaning of these fields is explained below.
+.TP 4
+.B pattern
+This field allows you to specify which files belong to the type. File types
+can either be specified by a \fIfilename pattern\fP, which refers to the name
+of a file, or a \fImagic header\fP, which refers to the contents of the file,
+or both.
+.sp
+There are three types of filename patterns: \fILiteral\fP patterns
+specify a literal filename such as ``\fIcore\fP.'' \fISuffix\fP patterns
+specify a suffix the filename must match, and are indicated by a leading
+asterisk, as in ``\fI*.c\fP.'' (All characters following the initial \fI*\fP
+are interpreted as literals; there is no expansion of embedded wildcards.)
+Finally, \fIprefix\fP patterns specify a prefix to be matched against the
+filename. They are denoted by a trailing asterisk, as in ``\fIREADME*\fP.''
+.sp
+Magic headers are specified by a symbolic name given in the \fImagic\fP file,
+enclosed in angle brackets. Entries referring to a magic header cause the
+contents of the file to be checked against the magic numbers in the
+\fImagic\fP file. The format of these entries is described in Section MAGIC
+HEADERS below.
+.TP 4
+.B icon
+The name of the bitmap or pixmap file containing the icon to be displayed
+for this file type.
+.TP 4
+.B push-action
+The command to be executed when the user double-clicks on a file of this
+type. This command is passed to the shell (via \fI-c\fP), together with the
+name of the selected file. The command is executed in the directory where the
+selected file is located. The filename is available in the command as the
+positional parameter number one, such that an action of the form \fIxyz $1\fP
+invokes the command \fIxyz\fP on the selected file. There are also three
+special kinds of push actions built into moxfm, \fIEDIT\fP and \fIVIEW\fP
+which invoke the default editor and default viewer on the selected file,
+respectively, and \fILOAD\fP which loads the selected file as an application
+file and opens a new application window (discussed in section APPLICATION
+FILES).
+.TP 4
+.B drop-action
+Similar to the push action, this field denotes a command to be executed when
+a collection of selected files is dropped onto the file. The absolute target
+filename itself is available as positional parameter \fI$1\fP, the remaining
+arguments denote the names of the files dropped onto the target file. The
+command is executed in the directory which contains the selected files. No
+special built-in commands are available for this type of action.
+.PP
+If an action field is empty, the corresponding action defaults to ``do
+nothing.''
+.PP
+For instance, the following entry defines an icon and an
+\fIEDIT\fP push action for \fI.c\fP files:
+.sp
+.nf
+*.c:xfm_c.xpm:EDIT:
+.fi
+.sp
+As another example, here is an entry for tar files. The push action causes the
+contents of the archive to be shown by the \fIxless\fP browser, while the drop
+adds the files which have been dragged onto the tar-file to the archive and
+pipes the output of tar to \fIxless\fP.
+.sp
+.nf
+*.tar.gz:xfm_taz.xpm:exec tar tfvz $1 | xless:exec tar
+    rfvz $* | xless
+.fi
+.sp
+(Note the use of the shell's \fIexec\fP command. Since actions are invoked
+through the shell, it is often useful to replace the shell with the actual
+command which is to be executed, in order to conserve memory space on
+small systems.)
+.PP
+It is possible that different patterns given in the \fIxfmrc\fP file overlap.
+In this case moxfm uses the \fIfirst\fP pattern which matches. Therefore
+you should always list the more specific patterns first. For instance, the
+following two entries specify what to do with compressed tar files (specific
+case) and other \fI.gz\fP files (default case):
+.sp
+.nf
+*.tar.gz:xfm_taz.xpm:exec tar tfvz $1 | xless:exec tar
+    rfvz $* | xless
+*.gz:xfm_z.xpm:exec gunzip -c $1 | xless:
+.fi
+.PP
+Moxfm also enables you to prompt for additional parameters before an action
+is executed. This is generally more useful with application entries than
+with file actions, and will therefore be described in the context of
+application configuration, see PARAMETER DIALOGS below.
+.PP
+The \fIxfmrc-nomagic\fP file (specified by the \fInoMagicConfigFile\fP
+resource) is an alternative file type configuration file which \fImust not use
+magic headers\fP.  Using this file instead of the standard \fIxfmrc\fP file
+for slow devices such as floppies or CD-ROMs can increase performance. See
+DEVICE CONFIGURATION below.
+
+.SH "MAGIC HEADERS"
+When compiled with the \fIMAGIC_HEADERS\fP option, moxfm can determine
+file types using the magic numbers contained in the files.
+.PP
+The magic numbers are described in a configuration file whose path is obtained
+from the \fImagicFile\fP resource. The format of the file is the same as that
+of the \fImagic\fP(5) file, with some extensions like regular expression
+matching. (See \fIxfmtype\fP(1).)
+.PP
+There are five built-in types which are used if all the patterns in the
+\fImagic\fP file fail:
+.TP 4
+.B unreadable
+Read failed.
+.TP 4
+.B empty
+File size is zero.
+.TP 4
+.B special
+Not a regular file.
+.TP 4
+.B ascii
+Could be read and looks like ASCII.
+.TP 4
+.B data
+Could be read but all tests failed and doesn't look like ASCII.
+.PP
+To specify a magic file type you include it between angle brackets at the
+beginning of the pattern field:
+.sp
+.nf
+<GIF>:xfm_gif.xpm:exec xpaint $1:
+.fi
+.sp
+or combined with a filename pattern:
+.sp
+.nf
+<ascii>*.cc:xfm_cc.xpm:EDIT:
+.fi
+.PP
+In the latter case, the file must meet both conditions, i.e. be an ASCII file
+and have a \fI.cc\fP suffix.
+.PP
+To include angle brackets in the type or the pattern you must escape them
+using backslashes.
+.PP
+If moxfm is compiled with the \fIMAGIC_HEADERS\fP option, it is also
+possible to specify custom icons for directories and executables. For this
+purpose, the \fImagic\fP file distributed with moxfm provides magic file
+types named \fI<DIR>\fP, \fI<EXEC>\fP, etc. For instance, here is an entry
+which specifies a special icon for hidden directories:
+.sp
+.nf
+<DIR>.*:hidden_dir.xpm::
+.fi
+.PP
+In the same way you can also override the built-in icons for displaying
+arbitrary directories and executables:
+.sp
+.nf
+<DIR>..:parent_dir.xpm::
+<DIR>:plain_dir.xpm::
+<DIR LNK>:link_dir.xpm::
+.fi
+
+.SH DEVICE CONFIGURATION
+The device configuration file, \fImoxfmdev\fP, lets you specify which mount
+points moxfm should keep track of, and which actions to perform in order to
+mount and unmount the corresponding file systems. \fICaution:\fP The format of
+this file is different from xfm's xfmdev file! When you have a properly
+configured \fImoxfmdev\fP file, you can access file systems on special devices
+such as floppies, CD-Roms, etc. in a transparent way. All you have to do is to
+enter a directory named in \fImoxfmdev\fP \- i.e. a mount point \- (e.g. by
+opening a file window on it or by copying files to it), and moxfm will
+automatically perform the corresponding mount action for you. Likewise, if you
+leave such a directory (or the file copy operation is finished, respectively),
+moxfm invokes the corresponding unmount action.  (CAUTION: You still have to
+take care that you unmount a file system, e.g. by closing every file window
+which has been opened on it, before you physically remove the corresponding
+medium.) When you have configured directories as mount points in
+\fImoxfmdev\fP, a \fImount table window\fP is shown, which informs you about
+the current state of the corresponding devices. You can also manually mount
+devices by pressing the \fImount\fP button in the mount table window, but then
+moxfm will not automatically unmount them when they are no longer needed and
+you have to take care of pressing the \fIunmount\fP button in the mount table
+window.
+.PP
+An entry of the \fImoxfmdev\fP file has the following format:
+.sp
+.nf
+label:special-device:mount-point:mount-action:
+    umount-action:slow-device
+.fi
+.sp
+The \fIlabel\fP field specifies the label of the device shown in the mount
+table window. \fISpecial-device\fP denotes the special device
+(e.g. \fI/dev/fd0\fP) to be mounted on the \fImount-point\fP.
+\fIMount-action\fP defines the command to be executed in order to mount the
+file system, and \fIumount-action\fP the command for unmounting the file
+system.  It is important that the \fI/etc/mtab\fP (or, on HP-UX machines, the
+\fI/etc/mnttab\fP) file is properly updated by the \fImount-action\fP and the
+\fIumount-action\fP in order for the \fIUpdate display\fP button of the mount
+table window to work properly! On \fILinux\fP systems, you can use the
+\fIusermount\fP and \fIuserumount\fP programs distributed with moxfm (see
+\fIusermount\fP(1)).  \fIslow-device\fP can either be a zero-length string or
+the word SLOW. In the last case, the device is considered slow, which means
+that the \fIxfmrc-nomagic\fP configuration file is used in stead of
+\fIxfmrc\fP for file windows showing directories on this device.
+.sp
+Here is a ``typical'' entry from my \fImoxfmdev\fP file:
+.sp
+.nf
+Floppy:/dev/fd0:/floppy:usermount /dev/fd0:userumount
+    /dev/fd0:SLOW
+.fi
+.sp
+Of course, the details of how to mount a floppy file system may vary from
+system to system, so if you want to use the usermount program on a non-Linux
+system, you will have to change the arguments of the \fImount\fP and
+\fIumount\fP system calls accordingly. The programs used to mount and unmount
+filesystems have to be \fIsuid root\fP if you want ordinary users to be able
+to mount or unmount filesystems (caution!).
+
+.SH APPLICATION FILES
+Application files are used to specify the contents of the application window.
+Normally, these files are not altered with a text editor, but are updated by
+moxfm whenever the contents of the application window changes
+(see \fIautoSave\fP resource). An
+understanding of the application data is necessary, however, if you want to
+edit an existing or create a new entry using the \fIInstall application\fP
+or \fIEdit\fP options of the application menus. Each entry has the
+following form:
+.sp
+.nf
+name:directory:filename:icon:push-action:drop-action
+.fi
+.sp
+The \fIname\fP and \fIicon\fP fields specify the name of the application and
+a corresponding icon which should be displayed in the application window. The
+\fIpush-action\fP and \fIdrop-action\fP fields have the same meaning as in
+the \fIxfmrc\fP file: they indicate the commands to be passed to the shell
+when the user clicks on the button or drops files onto it, respectively.
+The \fIdirectory\fP and \fIfilename\fP fields let you specify a file to be
+passed to the application. These fields are filled in by moxfm when the
+user drags a file or directory onto the application window. Moxfm also
+properly sets up the action fields when installing a file which has a
+matching entry in the \fIxfmrc\fP file.
+.PP
+As usual, the target file (if specified) and any dropped files are passed to
+the push and drop actions as the first and the remaining parameters,
+respectively, see FILE TYPE CONFIGURATION for details. The push and drop
+actions are executed in the directory specified by the \fIdirectory\fP field,
+if it is nonempty. Otherwise, the push action is started from the user's home
+directory, and the drop action in the directory of the dropped files.
+.PP
+In an application file, moxfm recognizes four special types of built-in push
+actions. The \fIEDIT\fP and \fIVIEW\fP actions, as in \fIxfmrc\fP, invoke the
+default editor and viewer, respectively. The \fIOPEN\fP action indicates that
+the target file actually is a directory onto which moxfm should open a new
+file window when the user presses the corresponding button. Finally, the
+\fILOAD\fP action tells moxfm that the target is an application file whose
+contents are to be loaded into the application window. This action allows you
+to change between different groups of applications. In addition, moxfm has the
+special built-in drop action \fICOPY\fP (xfm does not support this). It can be
+specified for directory targets and means that the dropped files are moved,
+copied or linked (depending on the key which eventually is held down while
+releasing the middle mouse button, see above) into the directory.
+.PP
+It is time for some examples. Here are three useful entries from my
+\fIMain\fP file which I use to start an xterm, my favorite editor, and
+print a file using lpr, respectively:
+.sp
+.nf
+Terminal:::xterm.xpm:exec xterm:exec xterm -e $1
+Editor:::editor.xpm:exec emacs:exec emacs $*
+Printer:::printer.xpm:exec lpq | xless:exec lpr $*
+.fi
+.sp
+Moxfm gives you great flexibility in configuring special types of actions.
+For instance, the following entries can be used to implement a simple
+trashcan feature and an action to open a window on a floppy disk:
+.sp
+.nf
+Trash::.trash:mactrash.xpm:OPEN:shift;mv -f -b -V numbered $*
+    ~/.trash
+Floppy:/:floppy:disk.xpm:OPEN:COPY
+.fi
+.sp
+A typical entry for an application group looks as follows:
+.sp
+.nf
+Toolbox:~/.moxfm:Toolbox:apps.xpm:LOAD:
+.fi
+.sp
+It is also instructive to take a look at how moxfm sets up the entries
+when you drag files or directories to the application window. Play around with
+these features. It is fun! Many things can be done, if not with a single
+command then maybe with a tiny shell script.
+
+.SH "DESKTOP ICON CONFIGURATION"
+The \fIDesktop\fP file, specified by the \fIDTIconFile\fP resource, is a
+special application configuration file. It determines the properties and
+positions of all desktop icons managed by moxfm. The entries have the
+following form:
+.sp
+.nf
+name:directory:filename:icon:push-action:drop-action:
+    x-pos:y-pos
+.fi
+.sp
+The first six fields are identical to those of the ordinary application
+configuration files, the last to fields determine the position of the icon on
+the screen (\fIx\fP and \fIy\fP coordinate of the icon's upper left corner,
+respectively). The \fIDesktop\fP file is written when you select the \fISave
+desktop icons\fP or the \fISave windows\fP actions.
+
+.SH "PARAMETER DIALOGS"
+Moxfm lets you prompt the user for additional parameters when a push
+or drop action is invoked. In such a case, a dialog form appears, with one
+field for each parameter, into which the user can enter the required
+arguments. Currently, no checking is done on the supplied parameters; in
+fact, the user can simply leave all fields empty. Parameters are specified
+in an action using the form
+.sp
+.nf
+%parameter-name%
+.fi
+.sp
+where \fIparameter-name\fP is an arbitrary string not containing the \fI%\fP
+character, which will be displayed in the dialog form. (As usual, a literal
+\fI%\fP character can be escaped with the backslash.) Moxfm replaces each such
+\fI%...%\fP construct with the corresponding value entered by the user. For
+instance, here is an entry which allows you to print files on different
+printers:
+.sp
+.nf
+Printer:::printer.xpm:exec lpq -P%Printer:--deskjet% |
+    xless:exec lpr -P%Printer:--deskjet% -#%Number of
+    copies:--1% $*
+.fi
+.sp
+As the drop action in the example indicates, it is possible to specify more
+than one parameter field, and a default value for a parameter is specified
+using the notation
+.sp
+.nf
+%parameter-name--default-value%
+.fi
+
+.SH "USER DEFINED OBJECTS"
+You can drop objects such as e.g. text strings, pixmaps, etc. on application
+windows and this way create buttons representing the dropped objects. For each
+dropped object a file is created, which is deleted as soon as the
+corresponding button is removed.  The types of objects accepted for drop
+actions are determined by the \fItargets\fP file (specified by the
+\fIuserObjectFile\fP resource). The form of each entry in this file is as
+follows:
+.sp
+.nf
+target:push-action:button-title:button-icon:drag-icon
+.fi
+.sp
+The \fItarget\fP field gives the name of the drop atom. Some target names,
+such as STRING and PIXMAP, are defined by the ICCCM protocol. By default,
+application windows support ICCCM's FILE_NAME target as well as moxfm's own
+FILE_LIST and APPLICATION targets, so these should not be included in the
+\fItargets\fP file.
+.PP
+The \fIpush-action\fP field specifies the action invoked when a button
+representing a user-defined object is pressed. The EDIT action (see
+APPLICATION FILES) might be appropriate for a variety of drop targets,
+including the STRING target. The argument of the push action is the temporary
+file containing the dropped data. The \fIbutton-title\fP resource determines
+the label of the created button. If you specify CONTENTS as \fIbutton-title\fP
+the first 10 bytes of the dropped data are used as the button title (should be
+avoided for non-textual data). The \fIbutton-icon\fP and \fIdrag-icon\fP
+fields define the pixmaps used for the application button's icon and the drag
+icon, respectively.
+
+.SH "MONITORING"
+Moxfm provides a monitoring facility which allows to keep track of the status
+of certain files and directories and invoke user-defined actions in response
+to different types of changes. The actions are first considered when
+\fImoxfm\fP starts up and then later during the regular updates of file and
+application windows. The relevant files and directories and the corresponding
+actions are specified in the \fIxfmmon\fP file. Each entry in this file has
+the following format:
+.sp
+.nf
+filename:event:type:action
+.fi
+.sp
+The different fields in an entry have the following meaning:
+.TP 4
+.B filename
+.br
+Absolute path to the file or directory to be checked (as usual, ~ expands to
+the user's home directory; the string MAILPATH is expanded to the user's mailfile,
+typically $MAILPATH or /var/spool/mail/$USER).
+.TP 4
+.B event
+.br
+Specifies the event to check for. The possible values for this field are:
+\fIDELETE\fP, \fICREATE\fP (file has been deleted/created); \fIEMPTY\fP,
+\fINONEMPTY\fP (file exists and has become empty/nonempty; directories are
+considered empty when they do not have any entries distinct from . and ..);
+and \fIEQ\fP, \fINE\fP, \fILT\fP, \fILE\fP, \fIGT\fP, \fIGE\fP (compare file
+sizes of the new and the old version of the file). If this field is left empty
+then the action applies to any change in status.
+.TP 4
+.B type
+.br
+Specifies the type of action. Recognized values are \fISTARTUP\fP (the action
+is only invoked at startup time) and \fIUPDATE\fP (the action is only invoked
+during regular updates). If omitted, the action applies both at startup and
+during updates.
+.TP 4
+.B action
+.br
+The action to invoke when the specified event takes place. The same actions
+\fIEDIT\fP, \fIVIEW\fP, \fIOPEN\fP and \fILOAD\fP as in push actions are
+recognized; any other value is interpreted as a shell command to be executed.
+.PP
+During initialization time there is no previous state to compare with (the
+current status is not saved when moxfm exits), thus STARTUP actions can only
+respond to EMPTY and NONEMPTY events. STARTUP actions with an empty event
+field are a means to unconditionally execute a command when moxfm initializes.
+.PP
+If there are several applicable actions they are executed in the indicated
+order. Shell command actions are invoked synchronously (in contrast to
+applications executed using push or drop actions). This ensures that the
+executed actions take effect before file and application windows are
+first displayed or updated.
+.PP
+For instance, here are two entries from the sample \fIxfmmon\fP file
+distributed with \fImoxfm\fP. The entries implement a sensitive trashcan icon
+on the desktop. It is checked whether the trash directory has become empty or
+nonempty and the corresponding desktop icon is changed accordingly. (This will
+only work if the \fIcheckApplicationFiles\fP resource is set to true, see
+RESOURCES above.)
+.sp
+.nf
+~/.trash:EMPTY::sed -e "s/mactrash_full.xpm/mactrash.xpm/"
+    ~/.moxfm/Desktop > ~/.moxfm/Desktop.new; mv
+    ~/.moxfm/Desktop.new ~/.moxfm/Desktop
+~/.trash:NONEMPTY::sed -e "s/mactrash.xpm/mactrash_full.xpm/"
+    ~/.moxfm/Desktop > ~/.moxfm/Desktop.new; mv
+    ~/.moxfm/Desktop.new ~/.moxfm/Desktop
+.fi
+
+.SH "CONSOLE OUTPUT"
+Programs started by moxfm inherit their standard output and error streams
+from moxfm. Therefore, if you start moxfm from your session or window
+manager instead of an xterm, you should redirect moxfm's standard
+output and error to something which you can read while moxfm is running,
+if the window manager does not already do that for you. Usually, you will
+reassign both \fIstdout\fP and \fIstderr\fP to \fI/dev/console\fP, using the
+command:
+.sp
+.nf
+moxfm >/dev/console 2>&1
+.fi
+.sp
+Then you can read error messages and other output produced by launched
+applications in the console window on your desktop (such as \fIxconsole\fP,
+or \fIxterm -C\fP).
+.SH "ICONS"
+Moxfm supports icons in both the X bitmap and Arnaud Le Hors' XPM format.
+A collection of useful icons is included in the distribution.
+.SH "FILES"
+.TP 4
+.B ~/.moxfm
+Standard location for moxfm configuration and application files (see
+CONFIGURATION above).
+.SH "SEE ALSO"
+\fImagic\fP(5), \fImount\fP(8), \fIusermount\fP(1), \fIX\fP(1),
+\fIxconsole\fP(1), \fIxfm\fP(1), \fIxfmtype\fP(1), \fIxterm\fP(1), Arnaud Le
+Hors: \fIXPM Manual. The X PixMap Format\fP, Groupe Bull, 1993.
+.SH "CAVEATS AND BUGS"
+Moxfm catches the TERM signal to gracefully terminate the program,
+unmounting all open file systems which have been mounted by moxfm.
+However, some window and session managers may not send TERM signals to their
+client applications when terminating an X session. Therefore it might be
+necessary to explicitly quit moxfm or manually close file windows mounted
+by moxfm before exiting X.
+.PP
+Do not specify a relative path in the directory field of an application item,
+because when you execute a push action on the application the current
+directory might not always be what you expect. This will probably be fixed in
+a future release. ;-)
+.PP
+Moxfm depends on your shell \- see resource \fIBourneShells\fP.
+.SH "COPYRIGHT"
+Copyright (c) 1990-1993 by Simon Marlow
+.br
+Copyright (c) 1994-1996 by Albert Graef
+.br
+Copyright (c) 1995-1996 by Oliver Mai
+.SH "AUTHORS"
+The \fIxfm\fP program was originally written by Simon Marlow
+(simonm@dcs.glasgow.ac.uk) at the University of Glasgow. Albert Graef
+(ag@muwiinfa.geschichte.uni-mainz.de) at the University of Mainz is the author
+of xfm-1.3.x, which contains many bug fixes and enhancements. Other people
+have contributed additional features: Dave Safford (dave.safford@edu.tamu.sc;
+automatic folder updates); Robert Vogelgesang (vogelges@rhrk.uni-kl.de; shell
+detection code); Juan D. Martin (juando@cnm.us.es; magic headers); Kevin
+Rodgers (rodgers@lvs-emh.lvs.loral.com; Filter option); Scott Heavner
+(sdh@falstaff.MAE.cwru.edu; View option); Brian King (ender@ee.WPI.EDU;
+default values in parameter dialogs).
+.PP
+\fIMoxfm\fP was developed by Oliver Mai (mai@sugra.desy.de) at the university
+of Hamburg, using source code and general ideas of \fIxfm-1.3.2\fP. The code
+for the automatic update of application windows and the monitoring function
+was contributed by Albert Graef.

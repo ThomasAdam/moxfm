@@ -1,0 +1,77 @@
+XCOMM  -----------------------------------------------------
+XCOMM  Top Level Imakefile for moxfm
+XCOMM
+XCOMM  Created for xfm Mar 8 1993 by Simon Marlow (simonm@dcs.gla.ac.uk)
+XCOMM  Modified Mar 22 1995 by Albert Graef (ag@muwiinfa.geschichte.uni-mainz.de)
+XCOMM   Adapted to moxfm Aug 11 1995 by Oliver Mai (mai@x4u2.desy.de)
+XCOMM  -----------------------------------------------------
+
+#include "Imake.options"
+
+#ifdef MAKE_USMOUNT
+USERMOUNT = usermount
+#else
+USERMOUNT =
+#endif
+
+#ifdef MAGIC_HEADERS
+#define Subdirs regexp src $(USERMOUNT)
+XFMRC = xfmrc
+#else
+#define Subdirs src $(USERMOUNT)
+XFMRC = xfmrc.nomagic
+#endif
+
+#ifndef PassCDebugFlags
+#define PassCDebugFlags
+#endif
+
+MakeSubdirs(Subdirs)
+MakefileSubdirs(Subdirs)
+CleanSubdirs(Subdirs)
+DependSubdirs(Subdirs)
+InstallSubdirs(Subdirs)
+InstallManSubdirs(Subdirs)
+
+XCOMM  rules to create and install the appdefaults file, the
+XCOMM  config files and the
+XCOMM  pixmaps 
+
+XCOMM  /* CppFileTarget will not work under SunOS 4.1, you
+XCOMM  might wish to replace it by CppScriptTarget or install
+XCOMM  the appdefaults file by hand.*/
+
+#ifdef SGI_MODE
+CppFileTarget(Moxfm.ad,lib/Moxfm.cpp,-DPIXMAPDIR=$(PIXMAPDIR) -DBITMAPDIR=$(BITMAPDIR) -DXFMRC=$(XFMRC) -DSGI_MODE,)
+#else
+CppFileTarget(Moxfm.ad,lib/Moxfm.cpp,-DPIXMAPDIR=$(PIXMAPDIR) -DBITMAPDIR=$(BITMAPDIR) -DXFMRC=$(XFMRC),)
+#endif
+
+InstallAppDefaults(Moxfm)
+
+install::
+	MakeDir($(XFMLIBDIR))
+	$(INSTALL) -c $(INSTBINFLAGS) lib/checkmail $(XFMLIBDIR)/checkmail
+	MakeDir($(XFMLIBDIR)/dot.moxfm)
+#ifdef MAGIC_HEADERS
+	$(INSTALL) -c $(INSTDATFLAGS) lib/xfmrc $(XFMLIBDIR)/dot.moxfm/xfmrc
+#endif
+	$(INSTALL) -c $(INSTDATFLAGS) lib/xfmrc.nomagic $(XFMLIBDIR)/dot.moxfm/xfmrc.nomagic
+	$(INSTALL) -c $(INSTDATFLAGS) lib/xfmmon $(XFMLIBDIR)/dot.moxfm
+	$(INSTALL) -c $(INSTDATFLAGS) lib/moxfmdev $(XFMLIBDIR)/dot.moxfm
+	$(INSTALL) -c $(INSTDATFLAGS) lib/magic $(XFMLIBDIR)/dot.moxfm
+	$(INSTALL) -c $(INSTDATFLAGS) lib/targets $(XFMLIBDIR)/dot.moxfm
+	$(INSTALL) -c $(INSTDATFLAGS) lib/Desktop $(XFMLIBDIR)/dot.moxfm
+	$(INSTALL) -c $(INSTDATFLAGS) lib/Main $(XFMLIBDIR)/dot.moxfm
+	MakeDir($(PIXMAPDIR))
+	$(INSTALL) -c $(INSTDATFLAGS) lib/pixmaps/?* $(PIXMAPDIR)
+
+XCOMM  Use the following before installing over an existing
+XCOMM  version of moxfm. (You might wish to back up
+XCOMM  your old configuration first. ;-)
+
+uninstall::
+	$(RM) $(DESTDIR)$(BINDIR)/moxfm
+	$(RM) $(DESTDIR)$(MANDIR)/moxfm.$(MANSUFFIX)
+	$(RM) -r $(XFMLIBDIR)
+	$(RM) $(DESTDIR)$(XAPPLOADDIR)/Moxfm

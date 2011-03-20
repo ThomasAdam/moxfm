@@ -1,0 +1,296 @@
+
+	XFM - The X File Manager (ver 1.3.2)
+	------------------------------------
+
+	(c) Simon Marlow 1990-1993 	simonm@dcs.glasgow.ac.uk
+	(c) Albert Graef 1994, 1995	ag@muwiinfa.geschichte.uni-mainz.de
+
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published
+	by the Free Software Foundation; either version 2, or (at your option) 
+	any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+------------------------------------------------------------------------------
+
+This is a powerful file and applications manager program written using the X
+toolkit. It contains virtually all of the features that you would expect in a
+file manager -- move around your directory tree in multiple windows, and move,
+copy or delete files with simple mouse operations. Directory displays are
+updated automatically in regular intervals when the contents of a displayed
+directory changes. The integrated application manager allows you to load files
+into your favourite applications from the file manager by dragging icons. It
+can also be used as a "shelf" onto which you can place files and directories
+you are currently working with. A special LOAD action for application files
+enables you to manage different application groups.
+
+User-definable file types allow you to specify a command to be executed when
+double-clicking on a file or dropping other files onto it. The command can
+also prompt you for required parameters. Xfm makes it easy to configure
+special kinds of actions such as, e.g., replacing the contents of a compressed
+tar archive with a collection of selected files. A lot of corresponding
+examples can be found in the distribution, including a fully functional
+trashcan feature. Last not least, xfm can automatically mount and unmount
+special devices like floppies as you open and close the corresponding
+directories (mount points). So you won't have to fiddle around with mount or
+mtools commands any more if all you want to do is copy some files between the
+hard disk and your floppy drive.
+
+The original version of this program was written by Simon Marlow at the
+University of Glasgow. I included Simon's README for reference purposes; see
+README-1.2. [Most of the information in this file is outdated; please refer to
+this README file and the man page for up-to-date installation and usage
+instructions.]
+
+Release 1.3 stems from my efforts to resolve some nasty bugs in the 1.2 beta
+version distributed with Linux slackware, and to add XPM support for displaying
+color icons in the file and application windows. As it came out, I also added a
+plethora of other features to make xfm the tool I was looking for; see the
+ChangeLog for details. Realizing that my private xfm version might be useful
+for others as well, I contacted Simon and he told me to put together a new
+release and make it available on the net. So here it is! I hope you will find
+it as useful as I do -- I am now using xfm regularly, and can't imagine how I
+ever did without it. I think that this program compares well to other free --
+and even commercial -- file managers. It is fast, convenient to use, and offers
+a lot of built-in functionality and configuration options. If you are not
+addicted to the shell and like to shuffle around files with one hand in order
+to perform tasks such as moving, copying, deleting, compiling, formatting,
+archiving, compressing, etc. etc., then xfm is certainly for you.
+
+Release 1.3.1 adds an automatic shell detection feature, which has been
+contributed by Robert Vogelgesang (vogelges@rhrk.uni-kl.de). We hope that this
+transparently fixes the problems with different shell argument passing
+conventions which have been encountered with release 1.3. The configuration
+files supplied with the package should now work with any popular shell -- if
+not, set the new X resource Xfm.BourneShells; see the man page for details.
+
+Release 1.3.2 adds a bunch of new features; the most important are listed
+below:
+
+* Improved support for creating symbolic links. The Link option now works
+  completely analogous to the Copy option; in particular, it is now possible
+  to create links for a selected set of files in a specified directory.
+
+* Rearranging items in the application window, which used to be a pain in
+  earlier releases, is now a lot easier. Items in the application window
+  can now be moved and copied using drag and drop, and cut/copy/paste gives a
+  convenient way to move entries between different application files. There
+  also is a new option for installing application groups, and the Back and
+  Main buttons allow to navigate in the application group tree.
+
+* "Magic headers," contributed by Juan D. Martin (juando@cnm.us.es). With
+  this feature it is now possible to identify file types by their mode and
+  contents in addition to the filename patterns. This is implemented using
+  a "magic" file format (see magic(5)) with some important extensions like
+  mode checking and regular expression matching. It also allows you to specify
+  custom icons for directories and executables in file windows. A sample
+  magic file is included. Also, Juan wrote a tiny program named xfmtype which
+  lets you determine the xfm magic type of a file.
+
+* A Filter option for the View menu, contributed by Kevin Rodgers
+  (rodgers@lvs-emh.lvs.loral.com). This nice function allows you to restrict
+  the set of files  displayed in a file window -- for instance, only display
+  *.c files.
+
+* A View option for the file popup menu (accompanied by a VIEW action which
+  can be used in push actions), contributed by Scott Heavner
+  (sdh@falstaff.MAE.cwru.edu). This option works analogous to the Edit
+  option, but invokes a program for viewing a file (e.g. xless, available
+  from ftp.x.org).
+
+* Default values in parameter dialogs, contributed by Brian King
+  (ender@ee.WPI.EDU). Using the %parameter--value% notation, you can now
+  specify default values for parameters in push and drop actions.
+
+* Lots of new icons, and a new set of standard config files. Juan D. Martin
+  has compiled a comprehensive collection of fileicons. Take a look at the
+  contrib/fileicons directory.
+ 
+* Besides this, I cleaned up the source tree, fixed some bugs, overhauled
+  Imakefiles and added an "Imake.options" file for easier customization.
+
+Thanks to all who reported bugs and contributed patches!
+
+
+INSTALLATION
+------------
+
+As distributed, xfm is set up to work with Arnaud Le Hors' XPM library. It can
+still be compiled and run without this library, if you comment out the #define
+XPM in Imake.options, but then you will have to edit the configuration files
+(xfmrc, Apps, etc.) to replace the pixmap icons by bitmaps (a few are supplied
+in the bitmaps directory). Versions of the XPM library less than 3.3 appear
+not to work.
+
+Other options which can be controlled by corresponding #define's in
+Imake.options are XAW3D (which causes linkage with the Xaw3d library, and also
+adds some Xaw3d-specific lines to the applications default file) and
+MAGIC_HEADERS (which causes the magic headers code to be included, and also
+determines the standard xfmrc file to be installed on your system). XAW3D is
+disabled, MAGIC_HEADERS enabled by default.
+
+Xfm 1.3 has been reported to compile and run successfully under Linux
+0.99-1.1.91, BSDI 1.1, RS6000 with AIX 3.2.5 (using gcc), SUN workstations
+running SunOS 4.1 and Solaris 2.3, HP700 with HPUX 9.01, DECstation with
+Ultrix 4.3a, DEC Alpha with OSF/1, SGI Indigo with IRIX 4.0.5F and 5.2. I hope
+I didn't break this with the current release. We are still interested in
+getting Xfm compiled on as many platforms as possible (porting should be a
+piece of cake), so please continue to send us any patches so that they can be
+included in future releases.
+
+NOTE for SUN users and other people running ol[v]wm: In order to get double
+clicks in xfm working, you may have to set olwm to the "focus-follows-mouse"
+(rather than the "click-to-focus") mode. This can be done by setting the
+SetInput resource to followmouse in your .OWdefaults file (see props(1)). In
+click-to-focus mode double clicks in xfm won't work. I consider this a bug in
+olwm, but if anybody has a fix to get double clicks working in click-to-focus
+mode I'd like to hear about it.
+
+-------------
+
+To customize the Imakefiles according to your preferences and your system,
+edit the file "Imake.options" at the top level of the distribution. This file
+is included by the different Imakefiles so that you usually won't have to edit
+the Imakefiles themselves. To build/install the software do the following:
+
+xmkmf && make Makefiles && make && make install && make install.man
+
+Of course, if you already have an xfm version >=1.3 running on your system,
+you might find it more convenient to execute an equivalent of the above from
+xfm. ;-)
+
+NOTE: When upgrading from xfm-1.3 or xfm-1.3.1, you might wish to back up your
+old set of config files before installing the new files. Then, after having
+generated the Makefile with xmkmf, issue a `make uninstall' to remove the old
+installation before you do the `make install'. Release 1.3.2 includes a lot of
+additional icons (see ICONS). Unfortunately I had to rename a few icons, so
+you may have to edit your old configuration files if you want to reuse them
+with the new release.
+
+If everything goes smoothly, you should have an xfm binary installed
+in your X bin directory, along with some other stuff (note the
+directories may not be identical on your system, it is up to Imake to
+install these things in the correct place):
+
+/usr/X11/bin/xfm.install		The user installation program
+/usr/X11/lib/X11/xfm/
+	bitmaps				Some example bitmaps
+	pixmaps				Some example pixmaps
+	dot.xfm				Default config files (for xfm.install)
+/usr/X11/lib/X11/app-defaults/Xfm	application defaults for xfm
+/usr/X11/man/man1/xfm.1			the manual page
+
+If everything didn't go smoothly, you may have to make xfm in the src
+subdirectory separately, and/or install things by hand.
+
+To complete the installation, you will probably wish to edit the default
+configuration files and the application defaults file to reflect your local
+configuration.
+
+Also you might wish to manually install additional icons and other stuff from
+the contrib dir.
+
+Good luck! :-)
+
+
+ICONS
+-----
+
+Xfm comes with a basic collection of bitmap and pixmaps icons from various
+sources on the net, including icons from Linux slackware, the X desktop
+manager (xdtm), the 0.91 beta release of the G.R.E.A.T. environment and the
+AIcons collection. Be warned that I had to edit some of these icons to be able
+to display them on my Linux box which only runs a 16 color X server. Therefore
+many of the icons aren't as colorful as could be.
+
+A comprehensive set of both bitmap and pixmap fileicons has been collected and
+edited for use with xfm by Juan D. Martin (juando@cnm.us.es). To install
+these, simply copy the files in contrib/fileicons/{bit,pix}maps to the
+{bit,pix}maps directory in your xfm libdir, or some other directory specified
+with the {bit,pix}mapPath resource. You should also install the modified xfmrc
+file in the contrib/fileicons directory which makes use of the new icons.
+
+Tons of other icons can be found on the net. For instance, take a look at the
+AIcons collection or pixmaps.tar.gz, both in the R5contrib directory on
+ftp.x.org. You might also consider to install the xbmbrowser program written
+by Ashley Roll and Anthony Thyssen (also on ftp.x.org), if you haven't done
+this already.
+
+
+STANDARD SETUP
+-------- -----
+
+The standard setup (files in the lib directory) consists of the magic and
+xfmrc files for common filetypes, a sample xfmdev file (specifying how special
+devices like floppy disks are mounted and unmounted), and a set of useful
+application files. It is intended as a starting point for developing a
+personal setup which fits your taste and requirements. Currently the following
+standard application groups are provided:
+
+* Apps -- the main group. It contains entries for common applications, namely
+  a shell tool (xterm), two different editors (emacs and OpenLook textedit), a
+  mailtool (xmailtool), a calculator (xcalc), a manpage reader (xman), a DVI
+  previewer (xdvi), WWW and news readers (mosaic and xrn), and the printer
+  (lpr). The group also contains entries for loading the Toolbox, Graphics and
+  Hosts groups (see below). Two entries, Home and Root, are used to open a
+  window on your home and the root directory, respectively, while the sample A:
+  and B: entries will be used to open file windows on the corresponding disk
+  drives (you may have to edit these entries, as well as the xfmdev file, to
+  reflect your system setup). The Trash entry implements a simple trashcan
+  feature using GNU mv (see TRASHCAN, below).
+
+* Toolbox -- a collection of common utilities. It contains entries for
+  starting up a debugger (xxgdb), make (dropping a makefile prompts you for the
+  target), and various archiving and compression utilities. Furthermore, it
+  provides an interface to the grep and find utilities (you might wish to
+  replace these by appropriate X utilities if you have them available).
+
+* Graphics -- graphics utilities. The standard setup includes entries for
+  ghostview, xfig, xv, xpaint, xbmbrowser, bitmap and pixmap.
+
+* Hosts -- access to the network. This group contains two sample entries, one
+  for invoking a remote xterm in your local network (you should edit this entry
+  to specify a hostname), and one for opening an ftp connection to ftp.x.org.
+
+You should inspect the entries in the application groups as well as the xfmrc
+file to find out exactly which push and drop actions are implemented.
+
+Contributions are always welcome. If you have any nifty icons or interesting
+entries for the magic, xfmrc and application files, please send them to me so
+that I can include them in future releases.
+
+
+TRASHCAN
+--------
+
+As I already mentioned, the standard setup includes a simple but useful
+trashcan feature. The corresponding line in the Apps applications file reads
+as follows:
+
+Trash::.trash:trash.xpm:OPEN:shift; mv -f -b -V numbered $* ~/.trash
+
+This line causes xfm to open a new window on the trashcan directory (.trash in
+the user's home directory) when double-clicking on the trashcan icon in the
+application window. This allows you to empty the trashcan, restore files,
+etc., by employing xfm's usual move/copy/delete operations. The second action
+is invoked when a collection of selected files is dropped onto the trashcan
+icon; it moves the selected files to the .trash directory. The "-b -V
+numbered" options of GNU mv are used to create numbered backup copies of files
+already present in .trash, instead of simply overwriting them. If you don't
+have GNU mv, you can omit these options (be aware that then files in .trash
+will be overwritten without notice) or replace the mv command with a shell
+script which creates the necessary backup copies before it invokes mv.
+
+
+Enjoy!
+
+Albert Graef
+ag@muwiinfa.geschichte.uni-mainz.de

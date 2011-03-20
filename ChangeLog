@@ -1,0 +1,213 @@
+2001-09-03  root  <Dr.Graef@t-online.de>
+
+	* changed program info (version number, www pointer)
+
+	* fixed a bug in FmFw.c (eliminate trailing newline from ctime
+	return value)
+
+	* moxfm config files now go to .moxfm
+
+	* face-lifting using modern apps and 3dicons, also tweaked some of
+	the resources
+
+	* added magic.c patches (from xplore/xfm)
+
+	* added Bob Woodside's 1.0.1 patches (see below)
+
+2001-08-15:	Version 1.0.1:
+
+		New features:
+                None.
+
+                Changes:
+                This is a minimal maintenance release designed to correct a
+                few problems that have cropped up since Oliver left off work
+                on moxfm, and produce a viable current distribution of the
+                source.
+
+                Bug Fixes:
+                - regexp/regexp.c: Commented out argument-less declaration for
+                strchr(), which causes compile failures with recent compilers.
+                I know of no systems on which this declaration is needed any
+                longer.
+                - regexp/regsub.c: Commented out argument-less declaration for
+                strncpy().
+                - src/Common.h: Added logic to force define for SYSV on recent
+                Linux systems, so that getwd will be properly redefined as
+                getcwd. getwd is a dangerous function that generally should not
+                be used, and recent versions of gcc issue a warning to this
+                effect.
+                - src/FmFw.c, src/FmIcons.c: Added a workaround for a failure
+                of double-clicks to work under certain window managers/window
+                manager modes, due to ill-synchronized passive grabs by the
+                window manager on a parent window. This "fix" is based on a
+                similar one made by Till Straumann for xfm.
+
+**************
+OLD ChangeLog:
+**************
+
+Date (yy-mm-dd):
+
+95-08-17:	Moxfm v. 0.9 is available for public
+		use for the first time via WWW. It is
+		based on xfm v. 1.3.2.
+
+95-08-21:	Version 0.9pl1: Bugfixes concerning 
+		the state of the mount table window at
+		startup 
+
+95-08-22:	Version 0.91: Changes in function
+		fnmultimatch() to allow for escaping
+		blanks.
+
+95-08-24:	Version 0.92: Changes in file window
+		update code.
+
+95-08-25:	Version 0.93: Code for updating file
+		windows changed again. Mount point
+		detection improved.
+
+95-08-26:	Version 0.94: When copying, moving,
+		linking or deleting fails for a number
+		of files, the screen is no longer flooded
+		with error message dialogs, but the
+		user has the chance to cancel the
+		operation. Changes in the code for
+		recursive copying. Bugfixes.
+
+95-08-28:	Version 0.94pl1: Bugfix concerning
+		status display in connection with file
+		selections.
+
+95-08-29:	Version 0.94pl2: Bugfix in filesystem
+		info dialog.
+
+95-08-30:	Version 0.95: Changes in FmDragDrop.c
+		in order to make moxfm compatible
+		with future versions which (hopefully)
+		will support copying files to/from a
+		remote machine. Bugfix concerning
+		-dir command line argument.
+
+95-08-31:	Version 0.95pl1: Fixes in device mounting
+		in FmFwActions.c and FmOps.c.
+
+95-09-02:	Version 0.96: Major code clean-up of
+		FmFwActions.c, also affecting other
+		modules. Bugfixes here and in FmOps.c.
+
+95-09-08:	Version 0.97: FIRST VERSION UPLOADED TO
+		FTP-SERVER.
+		
+		- You cannot drop a file onto itself
+		  any longer.
+		
+		Bugfixes:
+		- When a filename is specified for an
+		  application button, the filename is
+		  passed as first argument also for
+		  drop actions. This implies e.g. that
+		  the drop action for the trashcan should
+		  be
+		  "shift;mv -f -b -V numbered $* ~/.trash"
+		  now (as for xfm).
+		- The icon names are set correctly now.
+
+95-09-09:	Bugfix in usermount utility: userfstab
+		file is checked for all mount options,
+		not only "read-only" now.
+
+95-09-18:	Version 0.98:
+
+		New features:
+		- There is a popup menu of the directory
+		  name text field now (thanks to Steve
+		  Blake for idea.)
+		- The "File" pulldown menu has a "Perform
+		  action" item now.
+		- The mount table window has a "Close"
+		  button.
+		- Links are always made to *relative*
+		  paths.
+		- New resources saveOnExit and newWinOnDirPopup.
+		
+		Bugfixes:
+		- Moxfm should hopefully compile on OSF/1
+		  and SVR4 systems now (thanks to Albert
+		  Graef and Volker Mertens).
+		- Moxfm compiles with Motif 2.0 now.
+		- Moxfm doesn't crash any longer when it
+		  cannot allocate enough colors for the
+		  pixmaps (thanks to Detlef Schmier).
+		- The icon names should really be correct
+		  now.
+		  
+		Changes:
+		- When the autoSave feature of the
+		  application windows is enabled, the
+		  configuration is saved directly after
+		  every change and not first when moxfm
+		  exits.
+		- The *relative* paths of dropped files
+		  are passed to application buttons with
+		  specified directories now.
+		- There is a "Perform action" item in the
+		  pulldown menu of directory icons, too.
+		- New suppressWarnings resource instead of
+		  suppressXtWarnings resource.
+		- The names of the application group
+		  configuration files don't start with "xfm-"
+		  any longer.
+
+96-05-16:	Version 1.0:
+
+		New features:
+		- Files and applications can be placed as icons
+		on the root window.
+		- Added automatic application window updates along
+		with a checkApplicationFiles resource, and an applBoxIcon
+		resource for specifying the standard application group
+		icon. Furthermore, newly created application groups now
+		point back to the group they were created in.
+		(ag@muwiinfa.geschichte.uni-mainz.de)
+		- Added a facility for monitoring files during
+		automatic updates, along with the new xfmmon
+		configuration file (AG).
+		- You can drop user defined objects (listed in
+		targets configuration file) on application windows.
+		- You can switch off magic headers for certain
+		devices and file windows.
+		- You can move files across devices now.
+		- The file type configuration file can be reread
+		during runtime.
+		- An "about" message box has been added.
+		- Added an *applBoxIcon resource for specifying the
+		standard application group icon (AG).
+		- An implementation of the memmove() function is
+		provided for systems without one.
+		(uknt@brwlserv.cnet.att.com)
+		
+		- New resources and menu items in connection
+		with the new features.
+		- The *passedNamePolicy resource has been
+  		added.
+
+		Changes:
+		- The formats of the startup file and of the device
+		configuration file have changed (see INSTALL).
+		- Interactive performance has been improved, esp.
+		on slow devices. The performance penalty of
+		setting the Moxfm.checkFiles option to true is
+		much smaller now.
+		- The scrolling behavior of the file windows has
+		been improved.
+		- Newly created application groups now point back to
+		the group they were created in (AG).
+		- Moxfm works better with Motif 2.0.
+
+		Bugfixes:
+		Numerous. The Linux usermount utilities have
+		been improved. The FmMount.c module should
+		really compile on most platforms now, at least if
+		you compile with -DNO_GETMNTENT.

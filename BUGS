@@ -1,0 +1,33 @@
+Known bugs in moxfm-1.0:
+
+- Versions of moxfm linked with X11R5 and/or
+  Motif 1.x don't work with two color bitmaps. You
+  have to use pixmaps or a version of moxfm linked
+  with X11R6 and Motif 2.0.
+
+- Very probably due to a bug in Motif 2.0, file
+  windows can sometimes "forget" there drop site
+  structure. Just clone the file window and close
+  the old one. This behavior has not yet been
+  observed with Motif 1.x.
+  
+- When moxfm is copying files in the background to or
+  from slow devices such as floppies, the interactive
+  performance becomes quite bad. This will be fixed
+  by a multithreaded version some time.
+
+- When you drag the contents of an ASCII file into e.g.
+  a Motif editor, the drag operation will fail for
+  files larger than 250,000 Bytes. I don't know if it
+  works for all smaller files on all platforms.
+  
+- When you are running moxfm over a heavily loaded
+  network, interactive performance (especially for
+  drag'n'drop) can be quite bad.
+  
+If you find more bugs, please contact me (mai@sugra.desy.de).
+Please include information about the system you are running
+moxfm on, and if you were having any problems during
+installation. Thanks for your cooperation!
+
+Oliver Mai, May 16 1996

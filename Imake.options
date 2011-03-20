@@ -1,0 +1,134 @@
+
+XCOMM  Global settings for moxfm Imakefiles, to configure
+XCOMM  moxfm according to your preferences and system.
+XCOMM
+XCOMM  Aug 1995 Oliver Mai (last update Jan 1996)
+
+XCOMM  Destination directories. *************************
+
+XCOMM  Where moxfm config files go.
+XFMLIBDIR = $(LIBDIR)/moxfm
+
+XCOMM  Where pixmaps and bitmaps go.
+XCOMM  (You might want to change this to
+XCOMM  /usr/include/X11/pixmaps etc.)
+PIXMAPDIR = $(XFMLIBDIR)/pixmaps
+BITMAPDIR = $(XFMLIBDIR)/bitmaps
+
+XCOMM  Magic headers. ******************************
+
+XCOMM  Comment out the following if you do not want to have
+XCOMM  the option to use magic headers.
+#define MAGIC_HEADERS
+
+XCOMM  Libraries. *************************************
+
+XCOMM  Set XMINCDIR and XMLIBDIR as required by
+XCOMM  your system if the Motif library is not on the standard path.
+XCOMM  E.g.:
+XCOMM XMINCDIR = -I/usr/include/Motif1.2
+XCOMM XMLIBDIR = -L/usr/lib/Motif1.2
+
+XCOMM  How to link the Motif library:
+XMLIB = -lXm
+
+XCOMM  Set XPMINCDIR and XPMLIBDIR as required by
+XCOMM  your system if libXpm is not on the standard path.
+XCOMM  E.g.:
+XCOMM XPMINCDIR = -I/usr/local/X11/include
+XCOMM XPMLIBDIR = -L/usr/local/X11/lib
+
+XCOMM  How to link the XPM library
+XPMLIB = -lXpm
+
+XCOMM  If you have a Linux system and want moxfm to
+XCOMM  (un)mount filesystems with the usermount utility,
+XCOMM  uncomment the next line for
+XCOMM  installing usermount.
+XCOMM #define MAKE_USMOUNT
+
+XCOMM  Compilation options. *****************************
+
+XCOMM  Uncomment the following line if you want to compile
+XCOMM  moxfm with gcc, but gcc is not the default compiler
+XCOMM  on your system.
+XCOMM #define USE_GCC
+
+#ifdef USE_GCC
+CC = gcc
+CCOPTIONS = -Wall
+CDEBUGFLAGS = -O2 -fomit-frame-pointer
+#endif
+
+XCOMM  Debugging options. ***************************
+XCOMM  Uncomment this if you want to generate debug information:
+XCOMM CDEBUGFLAGS = -g
+
+XCOMM  Uncomment the following line if you want to
+XCOMM  debug moxfm with Electric fence:
+XCOMM EXTRA_LIBRARIES = -lefence
+
+XCOMM  Uncomment the following two lines if you want to
+XCOMM  debug moxfm with dmalloc:
+XCOMM EXTRA_LIBRARIES = -ldmalloc
+XCOMM DEBUG_DEFINES = -DDMALLOC -DDMALLOC_FUNC_CHECK
+
+XCOMM  System dependencies.****************************
+
+XCOMM  This must point to the file which contains the
+XCOMM  table of mounted devices.
+XCOMM  You might need to set this to /etc/mnttab on some
+XCOMM  systems (HP-UX, e.g.).
+MTABPATH = /etc/mtab
+
+XCOMM  This should point to the mail spooling directory.
+XCOMM  You might need to change it to /usr/spool/mail,
+XCOMM  /usr/mail (HP-UX) or /var/mail (IRIX)
+MAILDIR = /var/spool/mail
+
+XCOMM  Uncomment the next two lines if you are running
+XCOMM  a SVR4 system like e.g. Solaris:
+XCOMM SVR4_INC = -I/usr/dt/include -I/opt/X11/include
+XCOMM SVR4_LIBDIR = -L/usr/dt/lib
+
+XCOMM  Uncomment the next line if you cannot compile
+XCOMM  FmMount.c on your system (default on OSF/1).
+XCOMM  Read the note in INSTALL about this option!
+XCOMM MOUNT_DEF = -DNO_GETMNTENT
+
+XCOMM  Uncomment the next line if you are running IRIX.
+XCOMM IRIX_DEF = -DIRIX
+
+XCOMM  Uncomment the next line if your system is an SGI machine
+XCOMM  and you want moxfm to have the SGI Motif look.
+XCOMM #define SGI_MODE
+
+XCOMM  Uncomment the next line if you are running OSF/1
+XCOMM  or Digital Unix
+XCOMM #define OSF1
+
+XCOMM  Uncomment the next line if your system has the
+XCOMM  statvfs() system call (default if SVR4 is defined).
+XCOMM  Check this setting if FmDirs.c and FmFw.c won't compile,
+XCOMM  or when your linker cannot resolve _statfs.
+XCOMM STATFSTYPE = -DUSE_STATVFS
+
+XCOMM  Uncomment the following line if you have the realpath()
+XCOMM  funktion in your C library (not necessary on Linux and SVR4).
+XCOMM REALPATH = -DHAVE_REALPATH
+
+XCOMM  Uncomment the next line if your C library doesn't contain
+XCOMM  the memmove() function (as on some SunOS 4.x systems):
+XCOMM MEMMOVE = -DNO_MEMMOVE
+
+XCOMM  The following has been suggested for HP-UX:
+
+#ifdef HPArchitecture
+HPDEFINE = -Dhpux
+#ifdef USE_GCC
+EXTRA_LIBRARIES =
+#else
+CCOPTIONS = -Aa -D_HPUX_SOURCE
+#endif
+
+#endif

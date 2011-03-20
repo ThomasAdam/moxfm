@@ -1,0 +1,180 @@
+NOTE: Since Oliver Mai's homepage seems to be gone, I decided to
+make this package available on the xfm website. Bob Woodside donated
+the moxfm-1.0 sources and contributed some patches, and I gave moxfm
+a little facelift using the 3dicons from the xfm and xplore packages.
+Please note that this software is not maintained any longer, but I
+hope you enjoy it anyway. Sep 03 2001 Albert Graef
+
+
+					Hamburg 951214
+_________________________________________________
+
+MOXFM - the free Motif file manager (v. 1.0)
+_________________________________________________
+
+
+Moxfm was written using the source code of the
+excellent Athena widgets based xfm file manager
+and is intended to combine the advanced features
+of xfm with the (IMHO) even more user-friendly
+look and feel of the OSF/Motif (TM) GUI.
+
+	(c) Simon Marlow 1990-1993 	simonm@dcs.glasgow.ac.uk
+	(c) Albert Graef 1994, 1995	ag@muwiinfa.geschichte.uni-mainz.de
+		(both for xfm)
+	(c) Oliver Mai 1995, 1996	mai@sugra.desy.de
+
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published
+by the Free Software Foundation; either version 2, or (at your option) 
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+-------------------------------------------------------------------
+
+DESCRIPTION
+
+Moxfm is a full-fledged file and application manager for UN*X
+platforms running the X Window system. It is quite similar to
+the xfm file manager, whose source code moxfm is based upon,
+and uses configuration files with the same format as xfm
+(except the device configuration file, see the manpage moxfm(1)),
+but there are quite some differences, too. If you are a xfm
+user, you might want to read the README.moxfm-xfm file for the
+most important differences between moxfm and xfm.
+
+Moxfm - as xfm - allows you to browse your directory tree and to
+copy, move, link and delete files in an intuitive way by simple
+drag-and-drop actions. It provides context-sensitive popup menus.
+Directory displays are updated automatically in regular intervals
+when the contents of the directory changes.
+
+The integrated application manager provides a kind of shelf on
+which you can place your favorite applications as well as the
+files and directories you are currently working with, and even
+other (user-defined) types of dragged objects. It also
+allows you to access different groups of applications and files.
+User-definable file types let you specify a command to be
+executed when double-clicking on a file or dropping other files
+onto it. You can place files and applications as icons on the root
+window and use them both for starting applications, opening
+directory windows, and as drop sites. Application windows as well
+as the desktop icons can also be updated automatically whenever the
+corresponding application files change. Furthermore, moxfm provides
+a monitoring facility which allows to ``have an eye'' on important
+files and directories and respond with user-defined actions to
+certain types of events when the status of one of these files
+changes.
+
+Last not least, moxfm can automatically mount and unmount
+special devices like floppies as you open and close the
+corresponding directories (mount points) or copy files to them.
+
+
+INSTALLATION
+
+Read the INSTALL file.
+If you upgrade from an older version of moxfm, please read the
+INSTALL file, too, as SOME FILE FORMATS HAVE CHANGED.
+
+To compile, moxfm requires both OSF/Motif 1.2 or 2.0 and
+Arnaud Le Hors' XPM library.
+Binary versions of moxfm with Motif and the XPM library linked
+statically are available for Linux-i386 (both ELF and a.out formats)
+and HP-UX 9.x (see WHERE TO GET MOXFM).
+
+If you are using the FVWM window manager, you should add the line
+Style "desktop icon"	WindowListSkip
+to your .fvwmrc (or to the system-wide system.fvwmrc).
+You should not have the "NoPPosition" flag in your .fvwmrc in
+order for desktop icon alignment to work.
+
+If you are using a different window manager than fvwm or mwm,
+the appearance of the desktop icons might not be as intended.
+Twm doesn't remove the title bar, and ol[v]wm has some
+problems, too. If you find a patch to solve these incompatibilities,
+please tell me.
+
+ICONS
+
+Moxfm comes with a basic collection of pixmap icons from
+various sources on the net, including icons from Linux
+slackware, the X desktop manager (xdtm), the 0.91 beta
+release of the G.R.E.A.T. environment, the AIcons collection
+and the fvwm window manager. Most icons are taken from the
+xfm-1.3.2 distribution. The icons with a beveled-edge
+background where taken from an icon collection by Joerg
+Mertin. If you want to use more of them, download
+ftp://sunsite.unc.edu/pub/Linux/X11/icons/3d_pixmaps_1.0.tar.gz .
+You might then want to change the Moxfm.appIconWidth and
+Moxfm.appIconHeight resources to 56 and 46, respectively,
+and change the background color, too.
+There are no two-color bitmaps distributed with moxfm, but
+they can be used as well, if you are running a version moxfm
+linked with X11R6 and Motif 2.0.
+
+A comprehensive set of pixmap fileicons has been collected
+and edited for use with xfm by Juan D. Martin (juando@cnm.us.es).
+These pixmaps are included in the moxfm distribution and are
+installed during the 'make install' step.
+
+Tons of other icons can be found on the net. For instance,
+take a look at the AIcons collection or pixmaps.tar.gz, both
+in the R5contrib directory on ftp.x.org. You might also consider
+to install the xbmbrowser program written by Ashley Roll and
+Anthony Thyssen (also on ftp.x.org), if you haven't done
+this already.
+
+
+STANDARD SETUP
+
+The standard setup (files in the lib directory) consists of
+the magic and xfmrc files for common filetypes, a sample moxfmdev
+file (specifying how special devices like floppy disks are mounted
+and unmounted), the targets configuration file (see the manpage
+about it), and a set of useful application groups. It is
+intended as a starting point for developing a personal setup which
+fits your taste and requirements.
+
+Quite some preconfigured application buttons require the xless browser,
+which is available from ftp://ftp.x.org.
+(Hint: xless looks much nicer, when you link it with the 3D version
+of the Athena widgets, and use a non-white background color, e.g.
+grey. Set the *shapeStyle resource to "rectangle"). A nicer
+browser is pipescript from the Andrew toolkit (AUIS), but it takes
+much more time to come up.
+
+
+WHERE TO GET MOXFM
+
+You can get the moxfm sources as well as binary distributions for
+Linux (i386 architectures), HP-UX 9.x and IRIX 5.x from my WWW page
+	http://ips105.desy.de:8765/~mai/moxfm
+Both the sources and Linux binaries are also available via ftp from
+	ftp://ftp.uni-stuttgart.de/pub/unix/systems/linux/local/X11/
+A source-only distribution can be obtained from
+	ftp://ftp.x.org/contrib/applications/moxfm-src.tgz
+
+The xfm-1.3.2 sources, which moxfm is based on, are available at
+ftp://ftp.x.org/contrib/applications/xfm-1.3.2.tar.gz
+
+
+BUG REPORTS
+
+Please send all bug reports and patches to mai@sugra.desy.de.
+Always include the operation system of the machine you are
+running moxfm on, as well as the Motif version.
+
+Have fun!
+
+Oliver Mai
+mai@sugra.desy.de

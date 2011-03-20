@@ -1,0 +1,137 @@
+MOXFM INSTALLATION GUIDE
+________________________
+
+I have compiled and installed moxfm on Linux
+1.2.x, HP-UX 9.03 and IRIX 5.3 with both Motif 1.2.
+and Motif 2.0. I have received reports that moxfm
+also runs on Solaris 2.x, OSF/1 3.x, AIX, SunOS 4.x
+and NetBSD 1.1, though it must probably be
+compiled with the -DNO_GETMNTENT option on
+most of these platforms (see below). I hope moxfm
+will compile and run on many more systems,
+too, please report any successes on other platforms
+as well as problems to me (mai@x4u2.desy.de).
+Of cource, I am very interested in patches, too.
+
+The FORMATS of the startup file and of the device
+configuration file HAVE CHANGED in version 1.0.
+Please remove your startup file (typically ~/.moxfm/startup)
+and edit your device configuration file (~/.moxfm/moxfmdev)
+to fit the format described in the manual page.
+
+The installation of moxfm should be fairly simple.
+
+If you are upgrading from a previous version of
+moxfm you might want to backup your application
+configuration files (in /usr/X11/lib/moxfm/dot.moxfm/
+or so) first.
+
+Edit the Imake.options file to adapt it to your system.
+You might want to change the following defaults:
+
+  -	the directories, where moxfm's configuration
+  	files and the bitmaps are going to be installed
+
+  -	Normally, moxfm will use "magic headers" to
+  	determine the file types. If you want moxfm
+  	to determine the file types by suffixes of
+  	the file names only, don't #define MAGIC_HEADERS.
+  
+  -	You might need to tell the compiler where to
+  	look for Motif and libXpm headers and
+  	libraries.
+  	
+  -	If you have a Linux system and want to access
+  	devices as floppies or CD-ROM thru moxfm, you
+  	probably want to install the usermount utility
+  	by #defining MAKE_USMOUNT. You will have to
+  	customize the userfstab file. For this, read
+  	the usermount(1) man page. If you are already
+	using the usermount utility, backup your userfstab
+	file.
+  
+  -	If you want to compile moxfm with the GNU C
+  	compiler gcc and gcc is not the default compiler
+  	of your system, #define USE_GCC. You should
+  	try this option if your default compiler is
+  	unable to compile moxfm (e.g. some HP
+  	compilers).
+  	
+Having done this, type
+	./MakeMakefiles
+to generate the makefiles and to check the dependencies.
+
+Compile moxfm by simply saying
+	make
+
+If you have problems compiling FmMount.c, especially
+on OSF/1 and AIX, try to uncomment the line
+MOUNT_DEF = -DNO_GETMNTENT
+in Imake.options. Now FmMount.c should compile, but
+- moxfm will assume that all configured devices are
+  not mounted on startup of moxfm,
+- the "Update display" button of the mount table window
+  will be disabled, and
+- you shouldn't (un)mount configured devices by
+  other means than with moxfm, in order not to confuse
+  the program.
+
+If you get other error messages, try to compile with gcc,
+to #undef MAGIC_HEADERS if necessary, or to #define
+USE_STATVFS (if the system supports the statvfs system
+call in stead of statfs). If you need to make any
+changes in the source code or in the Imakefiles to
+compile moxfm, please report to mai@x4u2.desy.de.
+
+You install moxfm by becoming root and typing
+	make install
+	make install.man
+
+CAUTION: If you have a previous
+version of moxfm installed on your system, you might
+want to backup your customized configuration
+files first.
+
+If you want to install the moxfm binaries, man pages
+and application defaults file in different
+directories than the default ones, simply copy
+src/moxfm, src/moxfm.man, Moxfm.ad and eventually
+the files in usermount/ by hand. You have to
+'make install' anyway (but not necessarily as root)
+in order to install the pixmaps and configuration
+files, whose target directories you can specify in
+Imake.options, and in order to generate an application
+defaults file.
+(Note: If you know about a way to specify the
+target directories in the Imake.options file in
+a portable way, please tell me :-)
+
+If everything goes smoothly, you should have a
+moxfm binary installed in your X bin directory,
+along with some other stuff (note the directories
+may not be identical on your system, it is up to
+imake to install these things in the correct place):
+
+/usr/X11/lib/X11/moxfm/
+	bitmaps				Some bitmaps
+	pixmaps				Some pixmaps
+	dot.moxfm			Default config files
+/usr/X11/lib/X11/app-defaults/Moxfm	application defaults
+					for moxfm (important!)
+/usr/X11/man/man1/moxfm.1x		the manual page
+
+Finally, you should customize the system-wide
+application defaults file Moxfm (esp. you might need
+to adjust the *pixmapPath and *bitmapPath resources).
+Copy it to your home directory then and adapt it to
+your personal preferences then.
+
+You should be able to start moxfm now -- if not,
+read the documentation (README, manpage) once
+more and contact me (mai@sugra.desy.de) if this
+doesn't help.
+
+
+Have fun!
+
+Oliver Mai (mai@sugra.desy.de)

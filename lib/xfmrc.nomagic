@@ -1,0 +1,59 @@
+#
+# sample xfm configuration file   Sun Apr 24 1994   AG
+#
+##########################################################
+
+*.ps.gz:postscript2.xpm:exec gunzip -c $1 | ghostview -:
+*.eps.gz:eps.xpm:exec gunzip -c $1 | ghostview -:
+*.a:dot_a.xpm:exec nm $1 | xless:
+*.sa:dot_a.xpm:exec nm $1 | xless:
+*.bm:xbm.xpm:exec bitmap $1:
+*.c:dot_c.xpm:EDIT:
+*.cc:dot_cc.xpm:EDIT:
+*.cxx:dot_cc.xpm:EDIT:
+*.C:dot_cc.xpm:EDIT:
+*.f:dot_f.xpm:exec nedit $1:
+*.fli:mpg.xpm:exec xanim $1:
+*.dvi:binary.xpm:exec xdvi $1:
+*.ez:wordprocess.xpm:exec ez $1:
+*.gif:gif.xpm:exec xv $1:
+*.html:html.xpm:exec Mosaic $1:
+*.jpg:gif.xpm:exec xv $1:
+*.man:manpage.xpm:exec groff -Tps -mandoc -X $1:
+*.mov:mpg.xpm:exec xanim $1:
+*.mpg:mpg.xpm:exec mpeg_play $1 >/dev/console:
+*.tga:gif.xpm:exec xli $1:
+*.tiff:tiff.xpm:execxv $1:
+*.tar.gz:tar_z.xpm:exec tar tfz $1| xless:
+*.fig:fig.xpm:exec xfig -me -P $1:
+*.gz:compressed.xpm:exec gunzip -c $1 | xless:
+*.h:dot_h.xpm:EDIT:
+*.H:dot_h.xpm:EDIT:
+*.o:dot_o.xpm:exec nm $1 | xless:
+*.eps:eps.xpm:exec ghostview $1:
+*.ps:postscript2.xpm:exec ghostview $1:
+*.tar:tar.xpm:exec tar tf $1| xless:exec tar rfv $*| xless
+*.taz:tar_z.xpm:exec tar tfz $1| xless:
+*.tex:xfm_tex.xpm:EDIT:
+*.txi:xfm_tex.xpm:EDIT:
+*.texi:xfm_tex.xpm:EDIT:
+<ascii>*.texinfo:xfm_tex.xpm:EDIT:
+*.tgz:tar_z.xpm:exec tar tfz $1:
+*.xbm:xbm.xpm:exec bitmap $1:
+*.xpm:teddy.xpm:exec sxpm $1:
+*.tar.Z:tar_z.xpm:exec tar tfz $1| xless:
+*.Z:compressed.xpm:exec gunzip -c $1| xless:
+*.tar.z:tar_z.xpm:exec tar tfz $1| xless:
+*.z:compressed.xpm:exec gunzip -c $1| xless:
+*.zip:xfm_zip.xpm:exec unzip -l $1| xless:exec zip -r $*
+
+xfm-*:system.xpm:LOAD:
+core:core.xpm:exec ddd -c $1:
+Imake*:makefile.xpm:EDIT:
+Makefile:makefile.xpm:EDIT:
+Makefile.*:makefile.xpm:EDIT:
+makefile:makefile.xpm:EDIT:
+makefile.*:makefile.xpm:EDIT:
+README:info_dot.xpm:EDIT:
+README*:info_dot.xpm:EDIT:
+INSTALL:info_dot.xpm:EDIT:

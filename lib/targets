@@ -1,0 +1,7 @@
+# Definition of additional object types in
+# moxfm application window
+# Predefined object types: APPLICATION, FILE_NAME, FILE_LIST
+#
+# Atom:Push action:Button label:Button icon:Drag icon
+
+STRING:EDIT:CONTENTS:page.xpm:page.xpm

@@ -1,0 +1,8 @@
+#
+# sample moxfm device configuration   Thu Aug 1995   OM
+# Adapt this to your system configuration.
+#
+##########################################################################
+
+Floppy:/dev/fd0:/floppy:usermount /dev/fd0:userumount /dev/fd0:SLOW
+CDROM:/dev/cdrom:/cdrom:usermount /dev/cdrom:userumount /dev/cdrom:SLOW

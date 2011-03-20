@@ -1,0 +1,9 @@
+#XFM
+# moxfm desktop icons file
+# written by moxfm  Mon Sep  3 09:51:08 2001
+#
+##########################################
+
+Floppy:/:floppy:floppy.xpm:OPEN:COPY:10:120
+CD-ROM:/:cdrom:cdrom.xpm:OPEN::2:180
+Trash:~/.trash::trash_empty.xpm:OPEN:mv -f --backup=numbered $* ~/.trash:8:240

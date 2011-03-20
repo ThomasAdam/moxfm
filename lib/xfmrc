@@ -1,0 +1,133 @@
+#
+# sample xfm configuration file
+# Aug 29 1997   AG
+# for use with the 3dicons collection from the contrib dir
+#
+##########################################################
+
+# some nice icons for current and parent dir ...
+<DIR>.:folder.xpm::
+<DIR>..:folder_up.xpm::
+
+# ... and some special directories
+<DIR>.moxfm:system.xpm::
+<DIR>.xfm:system.xpm::
+<DIR>bin:tools.xpm::
+<DIR>mail:mailfolder.xpm::
+<DIR>Mail:mailfolder.xpm::
+
+# standard directory icons
+<DIR>:folder.xpm::
+<DIR LNK>:folder_link.xpm::
+
+# scripts
+<SCRIPT>:script_file.xpm:EDIT:
+<SCRIPT EXEC>:script.xpm::
+<SCRIPT EXEC LNK>:script_link.xpm::
+
+# executables
+<EXEC>:app.xpm::
+<EXEC LNK>:app_link.xpm::
+
+# xfm application files
+<XFM>:stuff.xpm:LOAD:
+
+# temporary files
+\#*:tmpfile.xpm:EDIT:
+*~:tmpfile.xpm:EDIT:
+
+# X-related stuff
+<ascii>.Xresources:res.xpm:EDIT:
+<ascii>.Xdefaults:res.xpm:EDIT:
+<ascii>.X*:x.xpm:EDIT:
+
+# other config files
+<ascii>.emacs:rc.xpm:EDIT:
+<ascii>.profile:rc.xpm:EDIT:
+<ascii>*rc:rc.xpm:EDIT:
+<ascii>magic:magic.xpm:EDIT:
+
+# various info files
+<ascii>readme:readme.xpm:EDIT:
+<ascii>read.me:readme.xpm:EDIT:
+<ascii>README:readme.xpm:EDIT:
+<ascii>README*:readme.xpm:EDIT:
+<ascii>*.README:readme.xpm:EDIT:
+
+<ascii>INSTALL:text.xpm:EDIT:
+<ascii>NEWS:text.xpm:EDIT:
+<ascii>ChangeLog:text.xpm:EDIT:
+<ascii>*.doc:text.xpm:EDIT:
+<ascii>*.txt:text.xpm:EDIT:
+
+# core dumps
+<data>core:core.xpm:exec ddd $1:
+
+# image formats
+
+<PS>:ps.xpm:exec ghostview $1:
+<GIF>:gif.xpm:exec xv $1:
+<JPG>:jpeg.xpm:exec xv $1:
+<TIFF>:tiff.xpm:exec xv $1:
+<FIG>:fig.xpm:exec xfig $1:
+<RAS>:raster.xpm:exec xv $1:
+<PBM>:pbm.xpm:exec xv $1:
+<PGM>:pgm.xpm:exec xv $1:
+<PPM>:ppm.xpm:exec xv $1:
+<XBM>:xbm.xpm:exec bitmap $1:
+<XPM>:teddy.xpm:exec pixmap -f $1:
+
+# audio files, assumes the sox/play program (still rather preliminary)
+
+<SND>:sound.xpm:exec play -t .auto $1:
+<RIFF WAVE>:sound.xpm:exec play -t .auto $1:
+
+# common file types
+
+<FRAME>:framemaker.xpm:fmclient -f $1:
+<MAIL>:mail.xpm:exec xmailtool -file $1:
+<BDF>:font.xpm:EDIT:
+<MAN>:manpage.xpm:groff -TX100 -man -mX -P-geometry -P655x860 $1:
+<HTML>:html.xpm:netscape $1:
+
+<data>*.a:dot_a.xpm:EDIT:
+<ascii>*.c:dot_c.xpm:EDIT:
+<ascii>*.cc:dot_cc.xpm:EDIT:
+<data>*.dvi:dvi.xpm:exec xdvi $1:
+<ascii>*.h:dot_h.xpm:EDIT:
+<data>*.o:dot_o.xpm::
+<ascii>*.tex:tex.xpm:EDIT:
+<ascii>*.txi:tex.xpm:EDIT:
+<ascii>*.texi:tex.xpm:EDIT:
+<ascii>*.texinfo:tex.xpm:EDIT:
+
+# Makefiles
+
+<ascii>Imakefile:make.xpm:xmkmf; echo "*** imake done ***":
+<ascii>Makefile:make.xpm:make; echo "*** make done ***":
+<ascii>Makefile.*:make.xpm:make -f $*; echo "*** make done ***":
+<ascii>makefile:make.xpm:make; echo "*** make done ***":
+<ascii>makefile.*:make.xpm:make -f $*; echo "*** make done ***":
+
+# archives, compressed files and such
+
+<ascii>*.tar:tar.xpm:tar xfv $1; echo "*** tar done ***":tar cfv $*; echo "*** tar done ***"
+<data>*.zip:zip.xpm:unzip $1; echo "*** zip done ***":zip -r $*; echo "*** zip done ***"
+
+<COMPRESS>*.tar.Z:tar.xpm:tar xfvZ $1; echo "*** tar done ***":tar cfvZ $*; echo "*** tar done ***"
+<COMPRESS>:compressed.xpm:exec uncompress $1:
+
+<GZIP>*.tar.gz:tar.xpm:tar xfvz $1; echo "*** tar done ***":tar cfvz $*; echo "*** tar done ***"
+<GZIP>*.taz:tar.xpm:tar xfvz $1; echo "*** tar done ***":tar cfvz $*; echo "*** tar done ***"
+<GZIP>*.tgz:tar.xpm:tar xfvz $1; echo "*** tar done ***":tar cfvz $*; echo "*** tar done ***"
+<GZIP>*.tar.z:tar.xpm:tar xfvz $1; echo "*** tar done ***":tar cfvz $*; echo "*** tar done ***"
+<GZIP>:compressed.xpm:exec gunzip $1:
+
+<UUENC>:uu.xpm:exec uudecode $1:
+
+# default entries
+
+<unreadable>:file_bad.xpm::
+<ascii>:file.xpm:EDIT:
+<data>:hex.xpm:EDIT:
+<empty>:empty.xpm:EDIT:

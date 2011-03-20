@@ -1,0 +1,32 @@
+/* XPM */
+static char * home_small_xpm[] = {
+/* width height num_colors chars_per_pixel */
+"16 16 10 1",
+/* colors */
+" 	s background	c None",
+".	c black",
+"X	c #008000",
+"o	c #000080",
+"O	c #0000ff",
+"+	c #800000",
+"@	c #ff0000",
+"#	c #800080",
+"$	c #808080",
+"%	c #c0c0c0",
+/* pixels */
+"         .      ",
+"  ..... ...     ",
+" ..XX.......... ",
+"..XXXX..oO..+@. ",
+".XXXXX.o#+o..+. ",
+"..XXX.oo$++O... ",
+".....oOo#++OO...",
+"....oOOOOOOOOO..",
+"....oooo#OOOOO. ",
+" ...Oo%$#O+++O. ",
+"  .+Oo$++O+++Oo ",
+" .X+Oo%$#O+++Oo ",
+"..XXooXX+O+++Oo ",
+"..X.o.XXoO+++Oo ",
+" ...o...oo$$$o. ",
+"  ............. "};

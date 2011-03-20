@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# sample checkmail script Sun Jan 28 AG
+# I've only tested this under Linux, other systems might need some work.
+
+# the user's incoming mailbox
+MAILFILE=/var/spool/mail/$USER
+
+# the moxfm application file to edit
+APPFILE=~/.moxfm/Desktop
+
+# the names of mail and newmail icons
+MAILICON=mail_none.xpm
+NEWMAILICON=mail_new.xpm
+
+if [ -f $MAILFILE ]; then
+nall=`grep "^From:" $MAILFILE | wc -l`
+nold=`grep "^Status:" $MAILFILE | wc -l`
+if [ $nall -gt $nold ]; then
+	sed -e "s/$MAILICON/$NEWMAILICON/" $APPFILE > $APPFILE.new
+	mv $APPFILE.new $APPFILE
+else
+	sed -e "s/$NEWMAILICON/$MAILICON/" $APPFILE > $APPFILE.new
+	mv $APPFILE.new $APPFILE
+fi
+fi

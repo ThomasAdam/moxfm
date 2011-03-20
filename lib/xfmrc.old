@@ -1,0 +1,123 @@
+#
+# sample xfm configuration file   Sun Apr 24 1994   AG
+#
+##########################################################
+
+# some nice icons for current and parent dir ...
+<DIR>.:open_dir.xpm::
+<DIR>..:parent_dir.xpm::
+
+# ... and some special directories
+<DIR>.xfm:system_dir.xpm::
+<DIR>News:news_dir.xpm::
+<DIR>Mail:mail_dir.xpm::
+
+# standard directory icons
+<DIR>.*:hidden_dir.xpm::
+<DIR>:plain_dir.xpm::
+<DIR LNK>:link_dir.xpm::
+
+# other hidden files
+.*:hidden.xpm:EDIT:
+
+# xfm application files
+<XFM>:system.xpm:LOAD:
+
+# rc files
+<ascii>*rc:rc.xpm:EDIT:
+
+# executables
+<EXEC>.*:hidden.xpm::
+<EXEC>:application.xpm::
+<EXEC LNK>:link_appl.xpm::
+
+# various info files
+<ascii>readme:info_dot.xpm:EDIT:
+<ascii>read.me:info_dot.xpm:EDIT:
+<ascii>README:info_dot.xpm:EDIT:
+<ascii>README*:info_dot.xpm:EDIT:
+<ascii>*.README:info_dot.xpm:EDIT:
+<ascii>INSTALL:info_dot.xpm:EDIT:
+
+# core dumps
+<data>core:core.xpm:exec ddd -c core:
+
+# image formats
+
+<PS>:postscript2.xpm:exec ghostview -a4 $1:
+<PS>*.eps:eps.xpm:exec ghostview -a4 $1:
+<GIF>:gif.xpm:exec xv $1:
+<JPG>:jpeg.xpm:exec xv $1:
+<data>*.jpg:jpeg.xpm:exec xv $1:
+<TIFF>:tiff.xpm:exec xv $1:
+<FIG>:fig.xpm:exec xfig -me -P $1:
+<RAS>:raster.xpm:exec xv $1:
+<PBM>:pbm.xpm:exec xv $1:
+<PGM>:pgm.xpm:exec xv $1:
+<PPM>:ppm.xpm:exec xv $1:
+<XBM>:xbm.xpm:exec bitmap $1:
+<XPM>:teddy.xpm:exec sxpm $1:
+<data>*.mov:mpg.xpm:exec xanim $1:
+<data>*.mpg:mpg.xpm:exec mpeg_play $1 >/dev/console:
+<data>*.fli:mpg.xpm:exec xanim $1:
+<data>*.tga:gif.xpm:exec xli $1:
+
+# common file types
+
+<MAN>:manpage.xpm:exec groff -Tps -mandoc -X $1:
+<HTML>:html.xpm:exec Mosaic $1:
+<ascii>*.html:html.xpm:exec Mosaic $1:
+<EZ>:wordprocess.xpm:exec ez $1:
+
+<data>*.a:dot_a.xpm:exec nm $1 | xless:
+<data>*.sa:dot_a.xpm:exec nm $1 | xless:
+<data>*.o:dot_o.xpm:exec nm $1 | xless:
+
+<ascii>*.c:dot_c.xpm:EDIT:
+<ascii>*.cc:dot_cc.xpm:EDIT:
+<ascii>*.cxx:dot_cc.xpm:EDIT:
+<ascii>*.C:dot_cc.xpm:EDIT:
+<ascii>*.h:dot_h.xpm:EDIT:
+<ascii>*.H:dot_h.xpm:EDIT:
+<ascii>*.f:dot_f.xpm:EDIT:
+
+<ascii>*.tex:xfm_tex.xpm:EDIT:
+<ascii>*.txi:xfm_tex.xpm:EDIT:
+<ascii>*.texi:xfm_tex.xpm:EDIT:
+<ascii>*.texinfo:xfm_tex.xpm:EDIT:
+<data>*.dvi:binary.xpm:exec xdvi $1:
+
+# Makefiles
+
+<ascii>Imake*:makefile.xpm:EDIT:
+<ascii>Makefile:makefile.xpm:EDIT:
+<ascii>Makefile.*:makefile.xpm:EDIT:
+<ascii>makefile:makefile.xpm:EDIT:
+<ascii>makefile.*:makefile.xpm:EDIT:
+
+# archives
+
+*.tar:tar.xpm:exec tar tf $1| xless:exec tar rfv $*| xless
+<GZIP>*.tar.gz:tar_z.xpm:exec tar tfz $1| xless:
+<GZIP>*.taz:tar_z.xpm:exec tar tfz $1| xless:
+<COMPRESS>*.taz:tar_z.xpm:exec tar tfz $1| xless:
+<GZIP>*.tgz:tar_z.xpm:exec tar tfz $1| xless:
+<COMPRESS>*.tar.Z:tar_z.xpm:exec tar tfz $1| xless:
+<GZIP>*.tar.z:tar_z.xpm:exec tar tfz $1| xless:
+
+#compressed files and such
+
+<GZIP>*.ps.gz:postscript2.xpm:exec gunzip -c $1 | ghostview -:
+<GZIP>*.eps.gz:postscript2.xpm:exec gunzip -c $1 | ghostview -:
+<GZIP>:compressed.xpm:exec gunzip -c $1 | xless:
+<COMPRESS>:compressed2.xpm:exec gunzip -c $1 | xless:
+<data>*.zip:xfm_zip.xpm:exec unzip -l $1| xless:exec zip -r $*
+
+<UUENC>:uu.xpm:exec /usr/bin/uudecode $1:
+
+# default entries
+
+<unreadable>:no_entry.xpm::
+<ascii>:plain.xpm:EDIT:
+<data>:binary.xpm:EDIT:
+<empty>:empty.xpm:EDIT:

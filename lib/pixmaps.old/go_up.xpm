@@ -1,0 +1,28 @@
+/* XPM */
+static char * goup_xpm[] = {
+"17 17 7 1",
+" 	s None	c None",
+".	c black",
+"X	c tan",
+"o	c wheat",
+"O	c navy blue",
+"+	c gray50",
+"@	c dodger blue",
+"                 ",
+"         ....    ",
+"        .XXXX.   ",
+"  .............  ",
+" .oooooooooooo.+ ",
+" .oooooOOooooo.+ ",
+" .ooooOOOOoooo.+ ",
+" .oooOOOOOOooo.+ ",
+" .ooOOO..OOOoo.+ ",
+" .oOOO.@@.OOOo.+ ",
+" .ooo.@@@@.ooo.+ ",
+" .oo.@@@@@@.oo.+ ",
+" .o.@@@@@@@@.o.+ ",
+" .o..........o.+ ",
+" .oooooooooooo.+ ",
+" ..............+ ",
+" +++++++++++++++ "};
+

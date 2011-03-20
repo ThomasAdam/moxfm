@@ -1,0 +1,33 @@
+/* XPM */
+static char * app_small_xpm[] = {
+/* width height ncolors chars_per_pixel */
+"16 16 11 1",
+/* colors */
+" 	s background	c None",
+".	c #222222",
+"X	c black",
+"o	c #FFFFCC",
+"O	c #FFCC99",
+"+	c #FF9966",
+"@	c #993300",
+"#	c #FF6633",
+"$	c #777777",
+"%	c #555555",
+"&	c #C0C0C0",
+/* pixels */
+"        .       ",
+"       XXX      ",
+"      XXooX     ",
+"     XXooooX    ",
+"    XXooooooX   ",
+"   XXooooooooX  ",
+"  XXooooooooooX ",
+" XXooooooOO+oooX",
+" XooooooO@#OOooO",
+"  Xooooo@@X#OOOX",
+"   Xooo@#@+OOOO$",
+"    Xooo@@####@%",
+"     Xoo&&@@@@@.",
+"      Xoo&$X   X",
+"       XoOX     ",
+"        XX      "};

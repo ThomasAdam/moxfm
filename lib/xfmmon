@@ -1,0 +1,39 @@
+#
+# sample moxfm monitor configuration
+# Sun Jan 28 1996   AG
+#
+##########################################################
+
+#############################################################################
+# NOTE: The following entries assume bash or a similar Bourne-like shell, and
+# they will only take effect if the automatic updates of file and application
+# windows are enabled (which is the default).
+#############################################################################
+
+# Here's my favourite one: the sensitive trashcan icon. It assumes that
+# you use the trash_empty and trash_full icons and that the Trash application
+# is on the desktop.
+~/.trash:EMPTY::sed -e "s/trash_full.xpm/trash_empty.xpm/" ~/.moxfm/Desktop > ~/.moxfm/Desktop.new; mv ~/.moxfm/Desktop.new ~/.moxfm/Desktop
+~/.trash:NONEMPTY::sed -e "s/trash_empty.xpm/trash_full.xpm/" ~/.moxfm/Desktop > ~/.moxfm/Desktop.new; mv ~/.moxfm/Desktop.new ~/.moxfm/Desktop
+
+~/.trash:EMPTY::sed -e "s/trash_full.xpm/trash_empty.xpm/" ~/.moxfm/Main > ~/.moxfm/Main.new; mv ~/.moxfm/Main.new ~/.moxfm/Main
+~/.trash:NONEMPTY::sed -e "s/trash_empty.xpm/trash_full.xpm/" ~/.moxfm/Main > ~/.moxfm/Main.new; mv ~/.moxfm/Main.new ~/.moxfm/Main
+
+# Here's another one which checks for incoming mail (see the checkmail
+# shell script). (Make sure you edit this entry to include your user name.)
+#MAILPATH:::/usr/lib/X11/moxfm/checkmail
+
+# Some sample entries follow. Uncomment those you wish to try.
+
+# Display a nonempty tmp directory at startup. Useful for those of you
+# who tend to forget to clean things up (like me). ;-)
+#~/tmp:NONEMPTY:STARTUP:OPEN
+
+# Automatically pop up a display of the printer queue when it changes:
+#/usr/spool/ljetplus-a4-auto-mono::UPDATE:if [ "`lpq`" != "no entries" ]; then lpq|xless; fi
+
+# Finally, here's how to launch a ``banner'' when moxfm starts up. Note the
+# use of & which puts xv into the background, preventing it from blocking
+# moxfm. Also note that the filename, which is not required in this context,
+# can simply be omitted.
+#::STARTUP:xv  -name 'Hi there, this is moxfm!' /usr/data/pictures/aliensea.gif &

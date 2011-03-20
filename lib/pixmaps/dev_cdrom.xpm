@@ -1,0 +1,31 @@
+/* XPM */
+static char * dev_cdrom_xpm[] = {
+/* width height num_colors chars_per_pixel */
+"16 16 9 1",
+/* colors */
+" 	s background	c None",
+".	c #808080",
+"X	c #ffff00",
+"o	c #c0c0c0",
+"O	c #00ffff",
+"+	c black",
+"@	c #00ff00",
+"#	c white",
+"$	c #008000",
+/* pixels */
+"                ",
+"         ...    ",
+"       ..XXo..  ",
+"      .OOXXooo+ ",
+"     .@@OXXoo#o+",
+"     .o@@.+.#oo+",
+"     .oo@+#+ooo+",
+"     .ooo.+.Ooo+",
+" .....ooo#ooXOO+",
+".#####.o#ooo@X+ ",
+".#ooooo..ooo+++ ",
+".#@$++++++++o.+ ",
+".#oo#####oooo.+ ",
+"..............+ ",
+" +++++++++++++  ",
+"                "};

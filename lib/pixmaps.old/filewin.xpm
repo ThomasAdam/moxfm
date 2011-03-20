@@ -1,0 +1,23 @@
+/* XPM */
+static char * filewin_xpm[] = {
+"17 17 3 1",
+" 	c none s none",
+".	c black",
+"X	c wheat",
+"       ...       ",
+"      .XXX.      ",
+" ...........     ",
+" .XXXXXXXXX.     ",
+" .XXXXXXXXX.     ",
+" .XXXXXXXXX...   ",
+" .XXXXXXXXX.XX.  ",
+" .XXXXXXXXX..... ",
+" .XXXXXXXXX.XXX. ",
+" ...........XXX. ",
+"     .XXXXXXXXX. ",
+"     .XXXXXXXXX. ",
+"     .XXXXXXXXX. ",
+"     .XXXXXXXXX. ",
+"     ........... ",
+"                 ",
+"                 "};

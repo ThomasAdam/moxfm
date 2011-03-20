@@ -1,0 +1,30 @@
+/* XPM */
+static char * xfm_file_small_xpm[] = {
+/* width height ncolors chars_per_pixel */
+"16 20 4 1",
+/* colors */
+" 	c black",
+".	s none c none",
+"X	c white",
+"o	c gray",
+/* pixels */
+"          ......",
+" XXXXXXXX  .....",
+" XXXXXXXX o ....",
+" XXXXXXXX oo ...",
+" XXXXXXXX ooo ..",
+" XXXXXXXX      .",
+" XXXXXXXXXXXXX  ",
+" XXXXXXXXXXXXX  ",
+" XXXXXXXXXXXXX  ",
+" XXXXXXXXXXXXX  ",
+" XXXXXXXXXXXXX  ",
+" XXXXXXXXXXXXX  ",
+" XXXXXXXXXXXXX  ",
+" XXXXXXXXXXXXX  ",
+" XXXXXXXXXXXXX  ",
+" XXXXXXXXXXXXX  ",
+" XXXXXXXXXXXXX  ",
+" XXXXXXXXXXXXX  ",
+"                ",
+".               "};

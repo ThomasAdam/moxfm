@@ -1,0 +1,93 @@
+___________________			August 1995
+					updated January '96
+MOXFM FOR XFM USERS
+___________________
+
+Moxfm was developed using xfm's source code and general ideas, and the
+format of the configuration files (except the device configuration file)
+is compatible with xfm's. But moxfm is not exactly a Motif port of xfm;
+it has a lot of new features xfm does not have, and is lacking four of
+xfm's features on the other hand. These are the four missing features:
+
+  -    	Moxfm does not support the tree file view of file windows.
+
+  -    	In moxfm's application window you cannot select multiple
+  	application buttons for simultaneous copy, move or delete
+  	actions, as they are designed as push buttons, so that the
+  	push action is invoked when single-clicking on them. In xfm,
+  	you have to double-click in order to invoke the push action,
+  	and you can select items in the application window by
+  	single-clicking.
+
+  -    	Moxfm's application windows do not have any additional
+  	push buttons except those representing the configured
+  	applications, in order to reduce the screen space taken by
+  	the window.
+
+  -    	You cannot open a file window of a directory by dragging
+  	the directory's icon and dropping it on the root window,
+  	but you have to select the Open item from the popup menu.
+
+
+Here some features of moxfm, which xfm (as of version 1.3.2) is lacking:
+
+  -    	You can have several application windows open at the same
+  	time and copy and move buttons between them with drag'n'drop.
+
+  -      You can put files and applications as icons on the desktop.
+
+  -	Moxfm supports automatic updates of application windows as well
+	as of file windows.
+
+  -	Moxfm provides a monitoring facility which allows you to keep an
+	eye on your most important files and directories. During automatic
+	updates moxfm checks the state of these files, and responds to
+	different kinds of changes by invoking user-defined actions (such
+	as, e.g., updating icons of some applications, opening a file or
+	application window, loading a file into your favourite editor,
+	etc.).
+
+  -    	Moxfm copies files in the background.
+
+  -    	Drag'n'drop is implemented in an ICCCM compliant way, and
+  	you can drag'n'drop files and applications between different
+  	instances of moxfm, as well as between moxfm and some other
+  	(Motif) applications. E.g., you can copy the contents of an
+  	ASCII file into a Motif editor by dragging the file from the
+  	file window and dropping it onto the window of the editor,
+  	and you can drag text from a Motif editor and drop it onto
+  	an application window.
+
+  -    	Directory buttons in application windows are by default
+  	created as drop sites for copying, moving and linking files
+  	and directories.
+
+  -    	Moxfm has a mount table window, where you can see which of
+	your configured special device files are currently mounted.
+	You can mount devices manually, too.
+
+  -    	You can save the positions and states of the open moxfm
+  	windows to the startup file by choosing the "Save windows:
+  	item from either the Windows pulldown menu of a file window
+  	or the popup menu of an application window.
+
+Most differences in the look and feel of moxfm and xfm arise from
+the different standards of the used widget libraries. Especially
+the mouse buttons have different functions. In moxfm, you select
+single files with the left mouse button, and if you want to select
+multiple files, you have to press the Ctrl key when selecting
+additional files with the left mouse button. If you want to select
+a number of files in consecutive order, you can select the first
+file of the block with the left mouse key and then select the last
+file with the left mouse key in connection with the Shift key.
+All drag'n'drop operations are performed with the middle mouse
+button. When you release the middle mouse button over a valid
+drop site, the dragged files are moved to the corresponding directory.
+When you hold the Ctrl key pressed while releasing the mouse
+button, the files are copied, and when you press Ctrl Shift, the
+files are linked.
+
+Have fun!
+
+Oliver Mai
+mai@x4u2.desy.de
