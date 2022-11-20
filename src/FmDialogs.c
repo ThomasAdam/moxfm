@@ -5,8 +5,10 @@
                                                                            
   functions for dialog windows                                                   
 -----------------------------------------------------------------------------*/
-
+#include <stdio.h>
 #include <errno.h>
+#include <stdlib.h>
+
 #include <X11/Intrinsic.h>
 #include <Xm/Xm.h>
 #include <Xm/MessageB.h>
@@ -22,12 +24,6 @@
 #include "Fm.h"
 
 #define TRASHDIR "/.trash"	/* relative to home dir */
-
-#ifndef linux
-#ifndef __NetBSD__
-extern char *sys_errlist[];
-#endif
-#endif
 
 static char error_string[MAXPATHLEN+256];
 
@@ -230,7 +226,7 @@ void unmountDialog(UnmountProcRec *data)
 
 void copyError(String from, String to)
 {
- sprintf(error_string, "Error copying %s\nto %s:\n%s", from, to, sys_errlist[errno]);
+ sprintf(error_string, "Error copying %s\nto %s:\n%s", from, to, strerror(errno));
  askQuestion(getAnyShell(), error_string, False, False, False, Error, None, copyErrorProc, NULL);
 }
 
@@ -333,7 +329,7 @@ int opError(Widget shell, String msg, String fname)
 {
  int answ = -1;
 
- sprintf(error_string, "%s\n%s:\n%s", msg, fname, sys_errlist[errno]);
+ sprintf(error_string, "%s\n%s:\n%s", msg, fname, strerror(errno));
  askQuestion(shell, error_string, False, False, False, Error, None, operr_callback, &answ);
  while (answ == -1)
      XtAppProcessEvent(app_context, XtIMAll);
@@ -734,5 +730,5 @@ void error(Widget shell, String line1, String line2)
 
 void sysError(Widget shell, String line)
 {
- error(shell, line, sys_errlist[errno]);
+ error(shell, line, strerror(errno));
 }
