@@ -25,6 +25,7 @@
 
 #endif	/* NO_GETMNTENT */
 
+#include <stdlib.h>
 #include <sys/wait.h>
 #include <Xm/Xm.h>
 #include <Xm/Form.h>

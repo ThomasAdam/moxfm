@@ -39,13 +39,12 @@ static struct stat stbuf;	/* Stat buffer. */
 static struct stat lstbuf;	/* Lstat buffer. */
 static int bytes;		/* Bytes read from the file. */
 static char   *namep;           /* pointer to filename */
-static int     mmatch();
+static int     mmatch(int i, char *buf);
 static char   *builtin_test();
 static char   *builtin_result;
-static char   *parse_string();
+static char   *parse_string(char **s);
 
-void magic_parse_file(name)
-char *name;
+void magic_parse_file(char *name)
 {
     FILE *fh;
     int hsiz;
@@ -258,9 +257,7 @@ char *name;
     }
 }
 
-void magic_get_type(name, buf)
-char *name;
-char *buf;
+void magic_get_type(char *name, char *buf)
 {
     int i;
     int fd;
@@ -347,9 +344,7 @@ char *buf;
     strcpy(buf, builtin_test());
 }
 
-static int mmatch(i, buf)
-int i;
-char *buf;
+static int mmatch(int i, char *buf)
 {
     int t;
     int o;
@@ -523,8 +518,7 @@ static char *builtin_test()
     return builtin_result = "unreadable";
 }
 
-static char *parse_string(s)
-char **s;
+static char *parse_string(char **s)
 {
     char cbuf[4];
     int i;

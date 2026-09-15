@@ -501,7 +501,7 @@ static void displayDTIcon(DTIconRec *dticon)
  }
  else
  {
-     for (i=0; i < XtNumber(file_popup_menu); i++)
+     for (i=0; i < XtNumber(popup_menu); i++)
 	 popup_menu[i].callback_data = dticon;
      dticon->popup = BuildMenu(dticon->app.form, XmMENU_POPUP, "Button Actions", 0, False, popup_menu);
      if (resources.auto_save)

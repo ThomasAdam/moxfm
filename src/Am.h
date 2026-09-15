@@ -184,7 +184,7 @@ int dupObject(Widget shell, AppRec *dest, AppRec *src);
 /*--FmIcons--------------------------------------------------------------*/
 
 extern DTIconRec **dtIcons;
-extern n_dtIcons;
+extern int n_dtIcons;
 
 void appOnDeskCb(Widget w, XtPointer client_data, XtPointer call_data);
 void removeIconProc(XtPointer awp, int conf);
